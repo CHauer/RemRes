@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RemResDataLib.Messages;
+using RemResLib.DataService.Contracts;
 
 namespace RemResLib.Network
 {
@@ -16,6 +17,11 @@ namespace RemResLib.Network
 
     public class NetworkConnectSystem
     {
+
+        /// <summary>
+        /// The notification data service object
+        /// </summary>
+        private INotificationDataService notificationDataServiceObj;
 
         /// <summary>
         /// The singelton instance object.
@@ -64,6 +70,28 @@ namespace RemResLib.Network
             }
 
             return ncsObj;
+        }
+
+        #endregion
+
+        #region Injection Properties
+
+        /// <summary>
+        /// Gets or sets the notification data service.
+        /// </summary>
+        /// <value>
+        /// The notification data service.
+        /// </value>
+        public INotificationDataService NotificationDataService
+        {
+            get
+            {
+                return notificationDataServiceObj;
+            }
+            set
+            {
+                this.notificationDataServiceObj = value;
+            }
         }
 
         #endregion
