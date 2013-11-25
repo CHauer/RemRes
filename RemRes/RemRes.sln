@@ -1,0 +1,74 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{FC05191A-AB3A-4532-AC11-789168D67A88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{691FF434-B659-45FC-8851-42FB3912D24B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{F495F3C5-F12A-4D9C-B5C7-F0657D6EBEF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemResService", "RemResService\RemResService.csproj", "{4D010128-094B-4FA6-A2C9-BDA70C6E1ACF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemResLib", "RemResLib\RemResLib.csproj", "{E0671158-2EB8-4572-AC37-2B9A5340F77F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemResDataLib", "RemResDataLib\RemResDataLib.csproj", "{BC7E38B5-55C1-442D-B0FC-C510922BEC98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemResClient", "RemResClient\RemResClient.csproj", "{757FDE02-DED1-43CD-956B-DCC6770F0EF3}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://hauersoftwarenet.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = RemResClient\\RemResClient.csproj
+		SccProjectTopLevelParentUniqueName1 = RemRes.sln
+		SccProjectName1 = RemResClient
+		SccLocalPath1 = RemResClient
+		SccProjectUniqueName2 = RemResDataLib\\RemResDataLib.csproj
+		SccProjectTopLevelParentUniqueName2 = RemRes.sln
+		SccProjectName2 = RemResDataLib
+		SccLocalPath2 = RemResDataLib
+		SccProjectUniqueName3 = RemResLib\\RemResLib.csproj
+		SccProjectTopLevelParentUniqueName3 = RemRes.sln
+		SccProjectName3 = RemResLib
+		SccLocalPath3 = RemResLib
+		SccProjectUniqueName4 = RemResService\\RemResService.csproj
+		SccProjectTopLevelParentUniqueName4 = RemRes.sln
+		SccProjectName4 = RemResService
+		SccLocalPath4 = RemResService
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D010128-094B-4FA6-A2C9-BDA70C6E1ACF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D010128-094B-4FA6-A2C9-BDA70C6E1ACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D010128-094B-4FA6-A2C9-BDA70C6E1ACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D010128-094B-4FA6-A2C9-BDA70C6E1ACF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0671158-2EB8-4572-AC37-2B9A5340F77F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0671158-2EB8-4572-AC37-2B9A5340F77F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0671158-2EB8-4572-AC37-2B9A5340F77F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0671158-2EB8-4572-AC37-2B9A5340F77F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC7E38B5-55C1-442D-B0FC-C510922BEC98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC7E38B5-55C1-442D-B0FC-C510922BEC98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC7E38B5-55C1-442D-B0FC-C510922BEC98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC7E38B5-55C1-442D-B0FC-C510922BEC98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{757FDE02-DED1-43CD-956B-DCC6770F0EF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{757FDE02-DED1-43CD-956B-DCC6770F0EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{757FDE02-DED1-43CD-956B-DCC6770F0EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{757FDE02-DED1-43CD-956B-DCC6770F0EF3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4D010128-094B-4FA6-A2C9-BDA70C6E1ACF} = {FC05191A-AB3A-4532-AC11-789168D67A88}
+		{E0671158-2EB8-4572-AC37-2B9A5340F77F} = {FC05191A-AB3A-4532-AC11-789168D67A88}
+		{757FDE02-DED1-43CD-956B-DCC6770F0EF3} = {691FF434-B659-45FC-8851-42FB3912D24B}
+		{BC7E38B5-55C1-442D-B0FC-C510922BEC98} = {F495F3C5-F12A-4D9C-B5C7-F0657D6EBEF2}
+	EndGlobalSection
+EndGlobal
