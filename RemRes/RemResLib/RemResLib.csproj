@@ -58,6 +58,8 @@
     <Compile Include="Network\XML\ServiceXmlListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\SettingsManager.cs" />
+    <Compile Include="Watch\Contract\IWatchSystem.cs" />
+    <Compile Include="Watch\RemResMessageHandler.cs" />
     <Compile Include="Watch\WatchSystem.cs" />
   </ItemGroup>
   <ItemGroup>

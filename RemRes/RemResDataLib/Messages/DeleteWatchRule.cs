@@ -9,7 +9,7 @@ namespace RemResDataLib.Messages
 {
     [Serializable]
     [XmlRoot(ElementName = "DeleteWatchRule")]
-    public class DeleteWatchRule
+    public class DeleteWatchRule : RemResMessage
     {
         [XmlAttribute]
         public string Name { get; set; }

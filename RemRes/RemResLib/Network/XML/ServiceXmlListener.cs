@@ -223,39 +223,42 @@ namespace RemResLib.Network.XML
                 log.Debug("Error during connection establishment to the client.", ex);
             }
 
-            try
-            {
-                networkStream = new NetworkStream(client);
-            }
-            catch (Exception ex)
+            if (client != null)
             {
                 try
                 {
-                    log.Debug("Problem with data connection establishment to the client " + client.RemoteEndPoint + ".", ex);
-                }
-                catch(Exception exi)
-                {
-                    log.Debug("Problem with data connection establishment to the client.", exi);
-                }
-                networkStream = null;
-            }
-
-            while (client != null && client.Connected)
-            {
-                try
-                {
-                    inputMessage = (RemResMessage)xmlFormatter.Deserialize(networkStream);
+                    networkStream = new NetworkStream(client);
                 }
                 catch (Exception ex)
                 {
-                    log.Debug("Problem with receiving the xml data message from the client.", ex);
+                    try
+                    {
+                        log.Debug("Problem with data connection establishment to the client " + client.RemoteEndPoint + ".", ex);
+                    }
+                    catch (Exception exi)
+                    {
+                        log.Debug("Problem with data connection establishment to the client.", exi);
+                    }
+                    networkStream = null;
                 }
 
-                if (inputMessage != null)
+                while (client.Connected)
                 {
-                    if (messageReceivedHandler != null)
+                    try
                     {
-                        messageReceivedHandler(inputMessage, clientKey);
+                        inputMessage = (RemResMessage)xmlFormatter.Deserialize(networkStream);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Debug("Problem with receiving the xml data message from the client.", ex);
+                    }
+
+                    if (inputMessage != null)
+                    {
+                        if (messageReceivedHandler != null)
+                        {
+                            messageReceivedHandler(inputMessage, clientKey);
+                        }
                     }
                 }
             }

@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RemResDataLib.BaseTypes.Process" Collapsed="true">
+    <Position X="1.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAhAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>BaseTypes\Process.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.BaseTypes.ProcessSet" Collapsed="true">
+    <Position X="1.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BaseTypes\ProcessSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.BaseTypes.Setting" Collapsed="true">
+    <Position X="3.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>BaseTypes\Setting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.BaseTypes.Settings" Collapsed="true">
+    <Position X="3.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BaseTypes\Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.BaseTypes.SingleValue" Collapsed="true">
+    <Position X="5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAgAAAAAAA=</HashCode>
+      <FileName>BaseTypes\SingleValue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.BaseTypes.WatchDataSet" Collapsed="true">
+    <Position X="5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BaseTypes\WatchDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.BaseTypes.WatchField" Collapsed="true">
+    <Position X="5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAABAAAQgAAAAAAAA=</HashCode>
+      <FileName>BaseTypes\WatchField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.BaseTypes.WatchParameter" Collapsed="true">
+    <Position X="6.75" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAEAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>BaseTypes\WatchParameter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.BaseTypes.WatchParameterDetail" Collapsed="true">
+    <Position X="6.75" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>BaseTypes\WatchParameterDetail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.BaseTypes.WatchRule" Collapsed="true">
+    <Position X="9" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAQAAAAAAIAAAAIAAAAAAAI=</HashCode>
+      <FileName>BaseTypes\WatchRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.BaseTypes.WatchRuleSet" Collapsed="true">
+    <Position X="9" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BaseTypes\WatchRuleSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.BaseTypes.WatchValue" Collapsed="true">
+    <Position X="5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>BaseTypes\WatchValue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.AddWatchRule" Collapsed="true">
+    <Position X="1.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\AddWatchRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.ClearWatchRules" Collapsed="true">
+    <Position X="8.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\ClearWatchRules.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.DeleteWatchRule" Collapsed="true">
+    <Position X="10.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\DeleteWatchRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.GetProcessList" Collapsed="true">
+    <Position X="10.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\GetProcessList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.GetProcessListResult" Collapsed="true">
+    <Position X="6.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\GetProcessListResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.GetSetting" Collapsed="true">
+    <Position X="3.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\GetSetting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.GetSettingResult" Collapsed="true">
+    <Position X="10.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Messages\GetSettingResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.GetWatchData" Collapsed="true">
+    <Position X="5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Messages\GetWatchData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.GetWatchDataResult" Collapsed="true">
+    <Position X="3.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\GetWatchDataResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.GetWatchRuleResult" Collapsed="true">
+    <Position X="8.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Messages\GetWatchRuleResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.GetWatchRules" Collapsed="true">
+    <Position X="5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\GetWatchRules.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.KeepAliveRequest" Collapsed="true">
+    <Position X="1.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\KeepAliveRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.KeepAliveResponse" Collapsed="true">
+    <Position X="6.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\KeepAliveResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.Notification" Collapsed="true">
+    <Position X="5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAQIAIAAAEAA=</HashCode>
+      <FileName>Messages\Notification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.NotifyMe" Collapsed="true">
+    <Position X="3.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\NotifyMe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.OperationStatus" Collapsed="true">
+    <Position X="6.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAABAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Messages\OperationStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.RemResMessage" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Messages\RemResMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResDataLib.Messages.SetSetting" Collapsed="true">
+    <Position X="8.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Messages\SetSetting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="RemResDataLib.BaseTypes.WatchFieldType" Collapsed="true">
+    <Position X="1.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAACAgQAAAAAAAAAAAA=</HashCode>
+      <FileName>BaseTypes\WatchFieldType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="RemResDataLib.Messages.StatusType" Collapsed="true">
+    <Position X="10.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAQABAAAAAAA=</HashCode>
+      <FileName>Messages\StatusType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
