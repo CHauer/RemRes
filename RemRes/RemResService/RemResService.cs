@@ -100,7 +100,9 @@ namespace RemResService
         private void InitNetworkConnectSystem()
         {
             networkSystem = NetworkConnectSystem.GetInstance();
+            //TODO - Get port from SettingsManager
             networkSystem.AddNetworkConnector(new ServiceXmlListener(45510));
+            
         }
 
         #endregion
@@ -108,6 +110,10 @@ namespace RemResService
 
 #if DEBUG
 
+        /// <summary>
+        /// Starts the service in a "Debug" Mode in a simple 
+        /// console mode window with status messages printed to Console.Out.
+        /// </summary>
         public void DebugStart()
         {
             OnStart(null);

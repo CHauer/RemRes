@@ -9,6 +9,11 @@ namespace RemResTestProject
     [TestClass]
     public class NetworkConnectorSystemTest
     {
+        /// <summary>
+        /// Tests the NetworkConnect System.
+        /// Adds a Stub NetworkworkConnection ans sends a message.
+        /// Test if the MessageReceived Event is raised.
+        /// </summary>
         [TestMethod]
         public void AddNetworkConnector_StartUp_Test()
         {
@@ -33,6 +38,11 @@ namespace RemResTestProject
             system.Stop();
         }
 
+        /// <summary>
+        /// Tests the NetworkConnect System.
+        /// Adds a Stub NetworkworkConnection ans sends a message.
+        /// Test if the MessageReceived Event is raised.
+        /// </summary>
         [TestMethod]
         public void AddNetworkConnector_SendMessage_Test()
         {
@@ -46,7 +56,7 @@ namespace RemResTestProject
                 SendMessageRemResMessageGuid = (message, clientID) => { return true; },
                 IsClientRegisteredGuid = (clientID) =>
                 {
-                    return clientGuid == clientID ? true : false;
+                    return clientGuid == clientID;
                 }
             };
             system.AddNetworkConnector(connector);

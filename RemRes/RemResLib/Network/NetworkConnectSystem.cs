@@ -29,12 +29,12 @@ namespace RemResLib.Network
         private static NetworkConnectSystem ncsObj;
 
         /// <summary>
-        /// The network system run
+        /// The network system run flag indicates if the "network" system is running
         /// </summary>
         private bool networkSystemRun;
 
         /// <summary>
-        /// The connectors
+        /// The connectors with the implementation of the network access.
         /// </summary>
         private List<INetworkConnector> connectors;
 
@@ -179,6 +179,8 @@ namespace RemResLib.Network
                 connector.MessageReceived -= messageReceivedHandler;
                 connector.Stop();
             }
+
+            networkSystemRun = false;
         }
 
         #endregion

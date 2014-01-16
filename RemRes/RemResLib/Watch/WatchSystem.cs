@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RemResDataLib.Messages;
 using RemResLib.DataService.Contracts;
+using RemResLib.Watch.Contract;
 
 namespace RemResLib.Watch
 {
-    public class WatchSystem
+    public class WatchSystem : IWatchSystem
     {
         /// <summary>
         /// The WatchSystem singelton instance object
@@ -66,6 +68,20 @@ namespace RemResLib.Watch
             {
                 this.configDataServiceObj = value;
             }
+        }
+
+        #endregion
+
+        #region Message Handler Methods
+
+        /// <summary>
+        /// Adds the watch rule.
+        /// </summary>
+        /// <returns></returns>
+        [RemResMessageHandler(typeof(AddWatchRule))]
+        public RemResMessage AddWatchRule()
+        {
+            return null;
         }
 
         #endregion
