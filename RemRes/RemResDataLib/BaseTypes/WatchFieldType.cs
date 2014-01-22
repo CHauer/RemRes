@@ -16,7 +16,10 @@ namespace RemResDataLib.BaseTypes
         Double,
 
         [XmlEnum]
-        DateTime
+        DateTime,
+
+        [XmlEnum]
+        Boolean
 
     }
 }
