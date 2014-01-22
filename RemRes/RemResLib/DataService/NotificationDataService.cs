@@ -9,5 +9,9 @@ namespace RemResLib.DataService
 {
     public class NotificationDataService : INotificationDataService
     {
+        public List<NotificationEndpoint> LoadNotificationEndpoints()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

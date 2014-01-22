@@ -14,8 +14,10 @@ using System.Xml.Serialization;
 using log4net.Core;
 using RemResDataLib.Messages;
 using RemResDataLib.BaseTypes;
+using RemResLib.DataService;
 using RemResLib.Network;
 using RemResLib.Network.XML;
+using RemResLib.Settings;
 
 namespace RemResService
 {
@@ -40,16 +42,38 @@ namespace RemResService
         private NetworkConnectSystem networkSystem;
 
         /// <summary>
+        /// The settings manager
+        /// </summary>
+        private SettingsManager settingsManager;
+
+        #region Constructor
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="RemResService"/> class.
         /// </summary>
         public RemResService()
         {
             InitializeComponent();
-            log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+            InitLog();
             starterThread = new Thread(new ThreadStart(InitStartService));
         }
 
-        #region Start Stop
+        #endregion
+
+        #region Initialize
+
+        /// <summary>
+        /// Initializes the log.
+        /// </summary>
+        private void InitLog()
+        {
+            log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        }
+
+        #endregion
+
+        #region Start Stop Service
 
         /// <summary>
         /// Wird bei der Implementierung in einer abgeleiteten Klasse ausgeführt,
@@ -61,7 +85,7 @@ namespace RemResService
         /// <param name="args">Vom Befehl zum Starten übergebene Daten.</param>
         protected override void OnStart(string[] args)
         {
-            log.Debug("Service RemRes is starting.");
+            log.Info("Service RemRes is starting.");
 
             try
             {
@@ -69,9 +93,9 @@ namespace RemResService
             }
             catch (Exception ex)
             {
-                log.Debug("Error during the start process of the service", ex);
+                //Error - if this thread doesnt start - the service won't start
+                log.Error("Error during the start process of the service", ex);
             }
-            
         }
 
         /// <summary>
@@ -94,15 +118,67 @@ namespace RemResService
         /// </summary>
         private void InitStartService()
         {
+            InitSettingsManager();
             InitNetworkConnectSystem();
+            InitExecutionSystem();
+            InitWatchSystem();
+            InitSystemCooperation();
         }
 
+        /// <summary>
+        /// Initializes the settings manager.
+        /// </summary>
+        private void InitSettingsManager()
+        {
+            settingsManager = SettingsManager.GetInstance();
+
+            settingsManager.SettingsDataService = new AppConfigSettingsDataService();
+        }
+
+        /// <summary>
+        /// Initializes the network connect system.
+        /// </summary>
         private void InitNetworkConnectSystem()
         {
+            int servicePort = -1;
+
             networkSystem = NetworkConnectSystem.GetInstance();
-            //TODO - Get port from SettingsManager
-            networkSystem.AddNetworkConnector(new ServiceXmlListener(45510));
             
+            //Get port from SettingsManager
+            servicePort = LoadServicePort();
+
+            networkSystem.AddNetworkConnector(new ServiceXmlListener(servicePort));
+        }
+
+        /// <summary>
+        /// Loads the service port from settings.
+        /// </summary>
+        /// <returns></returns>
+        private int LoadServicePort()
+        {
+            try
+            {
+                return Convert.ToInt32(settingsManager.GetSettingValue("standardServiceListenPort"));
+            }
+            catch(Exception ex)
+            {
+                log.Debug("Error during the load process of the service port from settings. Standard Value used.", ex);
+
+                //Standard Value
+                return 45510;
+            }
+        }
+
+        private void InitExecutionSystem()
+        {
+        }
+
+        private void InitWatchSystem()
+        {
+        }
+
+        private void InitSystemCooperation()
+        {
         }
 
         #endregion

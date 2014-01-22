@@ -19,6 +19,9 @@ namespace RemResDataLib.BaseTypes
         [XmlAttribute]
         public int Period { get; set; }
 
+        [XmlAttribute]
+        public int CacheValues { get; set; }
+
         public WatchField WatchField { get; set; }
 
         public WatchParameter WatchParameter { get; set; }

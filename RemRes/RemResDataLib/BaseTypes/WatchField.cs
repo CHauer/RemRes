@@ -14,9 +14,12 @@ namespace RemResDataLib.BaseTypes
     {
         [XmlAttribute]
         public WatchFieldType Type { get; set; }
+
         public string WatchObject { get; set; }
 
         public string WatchProperty { get; set; }
+
+        public string WhereClause { get; set; }
 
         public List<WatchValue> WatchFieldValues { get; set; }
     }

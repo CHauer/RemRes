@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using RemResDataLib.Messages;
+using RemResLib.Network;
 using RemResLib.Watch;
 using RemResLib.Watch.Contract;
 
@@ -16,7 +17,7 @@ namespace RemResLib.Execution
         /// <summary>
         /// The execution system object
         /// </summary>
-        private static ExecutionSystem executionSystemObj;
+        private static ExecutionSystem _executionSystemObj;
 
         /// <summary>
         /// The Message queue
@@ -36,12 +37,17 @@ namespace RemResLib.Execution
         /// <summary>
         /// The log
         /// </summary>
-        private static log4net.ILog log;
+        private static log4net.ILog _log;
 
         /// <summary>
         /// The watch system object
         /// </summary>
         private IWatchSystem watchSystemObj;
+
+        /// <summary>
+        /// Occurs when a network response message has to sent.
+        /// </summary>
+        private event NetworkMessage ResponseMessageHandler;
 
         #region Constructor
 
@@ -63,7 +69,7 @@ namespace RemResLib.Execution
         /// </summary>
         private void InitLog()
         {
-            log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+            _log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         }
 
         #endregion
@@ -76,12 +82,53 @@ namespace RemResLib.Execution
         /// <returns></returns>
         public static ExecutionSystem GetInstance()
         {
-            if(executionSystemObj == null)
+            if(_executionSystemObj == null)
             {
-                executionSystemObj = new ExecutionSystem();
+                _executionSystemObj = new ExecutionSystem();
             }
 
-            return executionSystemObj;
+            return _executionSystemObj;
+        }
+
+        #endregion
+
+        #region Event
+
+        /// <summary>
+        /// Occurs when network response message has to be sent.
+        /// </summary>
+        public event NetworkMessage ResponseNetworkMessageOccured
+        {
+            add
+            {
+                ResponseMessageHandler += value;
+            }
+            remove
+            {
+                ResponseMessageHandler -= value;
+            }
+        }
+
+        #endregion
+
+        #region Injection Property
+
+        /// <summary>
+        /// Gets or sets the watch system.
+        /// </summary>
+        /// <value>
+        /// The watch system.
+        /// </value>
+        public IWatchSystem WatchSystem
+        {
+            get
+            {
+                return watchSystemObj;
+            }
+            set
+            {
+                watchSystemObj = value;
+            }
         }
 
         #endregion
@@ -125,7 +172,7 @@ namespace RemResLib.Execution
             }
             catch(Exception ex)
             {
-                log.Error("Problem during start of the Execution System.", ex);
+                _log.Error("Problem during start of the Execution System.", ex);
             }
         }
 
@@ -146,11 +193,13 @@ namespace RemResLib.Execution
         /// </summary>
         private void ProcessMessages()
         {
+            object result = null;
             ExecutionMessage message;
 
             while (executionSystemRunning)
             {
-                while (messageQueue.Peek() == null) 
+                //if the messagequeue is empty or the watchSystem "link" is not configured
+                while (messageQueue.Peek() == null || watchSystemObj == null) 
                 {
                     Thread.Sleep(new TimeSpan(0, 0, 0, 0, 100));
                 }
@@ -161,11 +210,16 @@ namespace RemResLib.Execution
 
                 if (method != null)
                 {
-                    method.Invoke(watchSystemObj, new object[] { message.Message, message.ClientID });
+                    result = method.Invoke(watchSystemObj, new object[] { message.Message });
                 }
                 else
                 {
-                    log.InfoFormat("The System can not find a handler for the message {0}.", message.Message.GetType());
+                    _log.InfoFormat("The System can not find a handler for the message {0}.", message.Message.GetType());
+                }
+
+                if (result != null && result is RemResMessage)
+                {
+                    ResponseMessageHandler((RemResMessage)result, message.ClientID);
                 }
             }
         }
