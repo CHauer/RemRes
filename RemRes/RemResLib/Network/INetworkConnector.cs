@@ -43,5 +43,14 @@ namespace RemResLib.Network
         /// <param name="clientID">The client identifier.</param>
         /// <returns></returns>
         bool SendMessage(RemResMessage message, Guid clientID);
+
+        /// <summary>
+        /// Send a notification message to the endpoint.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="endpoint">The endpoint.</param>
+        /// <param name="port">The port.</param>
+        /// <returns></returns>
+        bool SendNotification(RemResMessage message, string endpoint, int port);
     }
 }

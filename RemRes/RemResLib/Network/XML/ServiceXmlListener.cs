@@ -316,7 +316,53 @@ namespace RemResLib.Network.XML
             }
             catch (Exception ex)
             {
-                log.Debug("Problem with receiving the xml data message from the client.", ex);
+                log.Debug("Problem with sending the xml data message from the client.", ex);
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Send a notification message to the endpoint.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="endpoint">The endpoint.</param>
+        /// <returns></returns>
+        public bool SendNotification(RemResMessage message, string endpoint, int port)
+        {
+            XmlSerializer xmlFormatter;
+            NetworkStream networkStream;
+            TcpClient client; 
+
+            xmlFormatter = new XmlSerializer(message.GetType());
+
+            try
+            {
+                client = new TcpClient(endpoint, port);
+                networkStream = client.GetStream();
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    log.Debug(String.Format("Problem with data connection establishment to the client {0}:{1}.",endpoint, port), ex);
+                }
+                catch (Exception exi)
+                {
+                    log.Debug("Problem with data connection establishment to the client.", exi);
+                }
+
+                networkStream = null;
+                return false;
+            }
+
+            try
+            {
+                xmlFormatter.Serialize(networkStream, message);
+            }
+            catch (Exception ex)
+            {
+                log.Debug("Problem with sending the xml data message from the client.", ex);
             }
 
             return true;

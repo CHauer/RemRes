@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RemResDataLib.Messages;
 using RemResLib.DataService.Contracts;
+using RemResLib.Settings;
 
 namespace RemResLib.Network
 {
@@ -29,6 +30,11 @@ namespace RemResLib.Network
         private static NetworkConnectSystem ncsObj;
 
         /// <summary>
+        /// The settings manager object
+        /// </summary>
+        private SettingsManager settingsManagerObj;
+
+        /// <summary>
         /// The network system run flag indicates if the "network" system is running
         /// </summary>
         private bool networkSystemRun;
@@ -43,6 +49,16 @@ namespace RemResLib.Network
         /// </summary>
         private event NetworkMessage messageReceivedHandler;
 
+        /// <summary>
+        /// The list of notification endpoints
+        /// </summary>
+        private List<NotificationEndpoint> lstNotificationEndpoints;
+
+        /// <summary>
+        /// The lock object for the notification endpoints list.
+        /// </summary>
+        private object lockEndpoints;
+
         #region Constrcutor 
 
         /// <summary>
@@ -50,8 +66,31 @@ namespace RemResLib.Network
         /// </summary>
         private NetworkConnectSystem()
         {
+            InitializeObjects();
+            InitializeSettingsManager();
+        }
+
+        #endregion
+
+        #region Initialize
+
+        /// <summary>
+        /// Initializes the objects.
+        /// </summary>
+        private void InitializeObjects()
+        {
             this.networkSystemRun = false;
             connectors = new List<INetworkConnector>();
+            lstNotificationEndpoints = new List<NotificationEndpoint>();
+            lockEndpoints = new object();
+        }
+
+        /// <summary>
+        /// Initializes the settings manager.
+        /// </summary>
+        private void InitializeSettingsManager()
+        {
+            settingsManagerObj = SettingsManager.GetInstance();
         }
 
         #endregion
@@ -91,6 +130,7 @@ namespace RemResLib.Network
             set
             {
                 this.notificationDataServiceObj = value;
+                LoadNotificationEndpoints();
             }
         }
 
@@ -193,23 +233,88 @@ namespace RemResLib.Network
         /// <param name="message">The message.</param>
         /// <param name="clientID">The client identifier.</param>
         /// <returns></returns>
-        public bool SendMessage(RemResMessage message, Guid clientID)
+        public void SendMessage(RemResMessage message, Guid clientID)
         {
             foreach (INetworkConnector connector in connectors)
             {
                 if (connector.IsClientRegistered(clientID))
                 {
-                    return connector.SendMessage(message, clientID);
+                    connector.SendMessage(message, clientID);
+                    return;
                 }
             }
-
-            return false;
         }
 
         #endregion
 
         #region Notification
 
+        /// <summary>
+        /// Loads the notification endpoints.
+        /// </summary>
+        /// <exception cref="System.InvalidOperationException">The Injection Property NotificationData Service has to be set.</exception>
+        private void LoadNotificationEndpoints()
+        {
+            if (notificationDataServiceObj == null)
+            {
+                throw new InvalidOperationException("The Injection Property NotificationData Service has to be set.");
+            }
+
+            lstNotificationEndpoints = notificationDataServiceObj.LoadNotificationEndpoints();
+        }
+
+        /// <summary>
+        /// Adds the notification endpoint.
+        /// </summary>
+        /// <param name="endpoint">The endpoint.</param>
+        /// <param name="port">The port.</param>
+        public void AddNotificationEndpoint(string endpoint, int port)
+        {
+            lock (lockEndpoints)
+            {
+                lstNotificationEndpoints.Add(new NotificationEndpoint
+                {
+                    DateReceived = DateTime.Now,
+                    Endpoint = endpoint,
+                    Port = port
+                });
+
+                int keepDays = 5;
+
+                try
+                {
+                    keepDays = Convert.ToInt32(settingsManagerObj.GetSettingValue("notificationDuration"));
+                }
+                catch { ;}
+
+                //remove all items older than xx days 
+                foreach (var item in lstNotificationEndpoints.Where(e => Math.Abs((e.DateReceived - DateTime.Now).Days) > keepDays).ToList())
+                {
+                    lstNotificationEndpoints.Remove(item);
+                }
+
+                notificationDataServiceObj.SaveNotificationEndpoints(lstNotificationEndpoints);
+            }
+        }
+
+        /// <summary>
+        /// Sends the notification.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        public void SendNotification(RemResMessage message)
+        {
+            //run through all endpoints and forward notification message
+            lock (lockEndpoints)
+            {
+                foreach (var endpoint in lstNotificationEndpoints)
+                {
+                    foreach (var connector in connectors)
+                    {
+                        connector.SendNotification(message, endpoint.Endpoint, endpoint.Port);
+                    }
+                }
+            }
+        }
 
         #endregion
 

@@ -13,8 +13,6 @@ namespace RemResDataLib.BaseTypes
 
         public int RAM { get; set;}
 
-        public string ProcessDescription{ get; set; }
-
         public int PID { get; set; }
 
         public string User { get; set; }

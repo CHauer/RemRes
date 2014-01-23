@@ -15,9 +15,11 @@ using log4net.Core;
 using RemResDataLib.Messages;
 using RemResDataLib.BaseTypes;
 using RemResLib.DataService;
+using RemResLib.Execution;
 using RemResLib.Network;
 using RemResLib.Network.XML;
 using RemResLib.Settings;
+using RemResLib.Watch;
 
 namespace RemResService
 {
@@ -42,6 +44,16 @@ namespace RemResService
         private NetworkConnectSystem networkSystem;
 
         /// <summary>
+        /// The execution system
+        /// </summary>
+        private ExecutionSystem executionSystem;
+
+        /// <summary>
+        /// The watch system
+        /// </summary>
+        private WatchSystem watchSystem;
+
+        /// <summary>
         /// The settings manager
         /// </summary>
         private SettingsManager settingsManager;
@@ -56,7 +68,7 @@ namespace RemResService
             InitializeComponent();
 
             InitLog();
-            starterThread = new Thread(new ThreadStart(InitStartService));
+            starterThread = new Thread(InitStartService);
         }
 
         #endregion
@@ -106,7 +118,7 @@ namespace RemResService
         /// </summary>
         protected override void OnStop()
         {
-            
+            Task.Run(new Action(StopSystems));
         }
 
         #endregion
@@ -123,6 +135,8 @@ namespace RemResService
             InitExecutionSystem();
             InitWatchSystem();
             InitSystemCooperation();
+
+            StartSystems();
         }
 
         /// <summary>
@@ -169,20 +183,72 @@ namespace RemResService
             }
         }
 
+        /// <summary>
+        /// Initializes the execution system.
+        /// </summary>
         private void InitExecutionSystem()
         {
+            executionSystem = ExecutionSystem.GetInstance();
         }
 
+        /// <summary>
+        /// Initializes the watch system.
+        /// </summary>
         private void InitWatchSystem()
         {
+            watchSystem = WatchSystem.GetInstance();
+            watchSystem.ConfigDataService = new XmlConfigDataService();
         }
 
+        /// <summary>
+        /// Initializes the system cooperation and connectors.
+        /// </summary>
         private void InitSystemCooperation()
         {
+            //inject watchSystem instance in execution system to provide
+            //the execution system a class to handle the incoming messages 
+            executionSystem.WatchSystem = watchSystem;
+
+            //incoming messages from the network system got forwarded to the execution system
+            networkSystem.MessageReceived += executionSystem.AddMessageForExecution;
+
+            //forward response messages to the network system to send them to the clients
+            executionSystem.ResponseNetworkMessageOccured += networkSystem.SendMessage;
+
+            //forward notification messages to the network system to send them to all notif entpoints
+            watchSystem.NotificationOccured += networkSystem.SendNotification;
+
+            //forward new notification endpoints to the network system
+            watchSystem.NotificationEndpointReceived += networkSystem.AddNotificationEndpoint;
+        }
+
+#endregion 
+
+        #region Start Stop Systems
+
+        /// <summary>
+        /// Starts the systems.
+        /// </summary>
+        private void StartSystems()
+        {
+            watchSystem.StartWatchSystem();
+            executionSystem.Start();
+            networkSystem.Start();
+        }
+
+        /// <summary>
+        /// Stops the systems.
+        /// </summary>
+        private void StopSystems()
+        {
+            networkSystem.Stop();
+            executionSystem.Stop();
+            watchSystem.EndWatchSystem();
         }
 
         #endregion
 
+        #region Debug
 
 #if DEBUG
 
@@ -195,9 +261,13 @@ namespace RemResService
             OnStart(null);
 
             Console.ReadLine();
+
+            OnStop();
         }
 
 #endif
+
+        #endregion
 
     }
 }

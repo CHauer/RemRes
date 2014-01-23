@@ -6,9 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using RemResDataLib.BaseTypes;
-using RemResDataLib.Messages;
 using RemResLib.DataService.Contracts;
+using RemResLib.Network;
 using RemResLib.Settings;
 
 namespace RemResLib.DataService
@@ -16,8 +15,9 @@ namespace RemResLib.DataService
     /// <summary>
     /// 
     /// </summary>
-    public class XmlConfigDataService : IConfigDataService
+    public class XmlNotificationDataService : INotificationDataService
     {
+
         /// <summary>
         /// The XML formatter
         /// </summary>
@@ -36,14 +36,14 @@ namespace RemResLib.DataService
         /// <summary>
         /// The configuration file name
         /// </summary>
-        private string configFileName;
+        private string notificationFileName;
 
-        #region Constructor
+        #region Constructor 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="XmlConfigDataService"/> class.
+        /// Initializes a new instance of the <see cref="XmlNotificationDataService"/> class.
         /// </summary>
-        public XmlConfigDataService()
+        public XmlNotificationDataService()
         {
             InitializeObjects();
             InitializeLog();
@@ -59,7 +59,7 @@ namespace RemResLib.DataService
         /// </summary>
         private void InitializeObjects()
         {
-            xmlFormatter = new XmlSerializer(typeof(WatchRuleSet));
+            xmlFormatter = new XmlSerializer(typeof(List<NotificationEndpoint>));
             settingsManagerObj = SettingsManager.GetInstance();
         }
 
@@ -78,16 +78,16 @@ namespace RemResLib.DataService
         {
             try
             {
-                configFileName = settingsManagerObj.GetSettingValue("serviceConfigSave").Value;
+                notificationFileName = settingsManagerObj.GetSettingValue("endpointConfigSave").Value;
 
-                if (string.IsNullOrEmpty(configFileName))
+                if (string.IsNullOrEmpty(notificationFileName))
                 {
-                    configFileName = "config.xml";
+                    notificationFileName = "notificationEndpoints.xml";
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                log.Debug("Error while loading the service config save file name from settings.", ex);
+                log.Debug("Error while loading the notificationEndpoints config save file name from settings.", ex);
                 return;
             }
         }
@@ -95,74 +95,74 @@ namespace RemResLib.DataService
         #endregion
 
         /// <summary>
-        /// Loads the watch rules from the config xml file.
+        /// Loads the notification endpoints.
         /// </summary>
         /// <returns></returns>
-        public IList<WatchRule> LoadWatchRules()
+        public List<NotificationEndpoint> LoadNotificationEndpoints()
         {
             Stream fileStream = null;
-            List<WatchRule> ruleSet = new WatchRuleSet();
+            List<NotificationEndpoint> endpoints = new List<NotificationEndpoint>();
 
-            if (!File.Exists(configFileName))
+            if (!File.Exists(notificationFileName))
             {
                 log.Debug("No config file found.");
 
                 //eturn emtpy list
-                return ruleSet;
+                return endpoints;
             }
 
             try
             {
-                fileStream = File.OpenRead(configFileName);
+                fileStream = File.OpenRead(notificationFileName);
             }
             catch (Exception ex)
             {
-                log.Debug("Error during opening the config file for read.", ex);
-                
+                log.Debug("Error during opening the notification endpoints config file for read.", ex);
+
                 //return empty list
-                return ruleSet;
+                return endpoints;
             }
 
             try
             {
-                ruleSet = (WatchRuleSet)xmlFormatter.Deserialize(fileStream);
+                endpoints = (List<NotificationEndpoint>)xmlFormatter.Deserialize(fileStream);
             }
             catch (Exception ex)
             {
-                log.Debug("Error during deserializing the config file data to watch rules.", ex);
+                log.Debug("Error during deserializing the notification endpoint file data to endpoint objects.", ex);
 
                 //return empty list
-                return ruleSet;
+                return endpoints;
             }
 
-            return ruleSet;
+            return endpoints;
         }
 
         /// <summary>
-        /// Saves the watch rules.
+        /// Saves the notification endpoints.
         /// </summary>
-        /// <param name="list">The list.</param>
-        public void SaveWatchRules(WatchRuleSet list)
+        /// <param name="endpoints">The endpoints.</param>
+        public void SaveNotificationEndpoints(List<NotificationEndpoint> endpoints)
         {
             Stream fileStream = null;
 
             try
             {
-                fileStream = File.OpenWrite(configFileName);
+                fileStream = File.OpenWrite(notificationFileName);
             }
             catch (Exception ex)
             {
-                log.Debug("Error during opening the config file for write.", ex);
+                log.Debug("Error during opening the notification endpoint config file for write.", ex);
                 return;
             }
 
             try
             {
-                xmlFormatter.Serialize(fileStream, list);   
+                xmlFormatter.Serialize(fileStream, endpoints);
             }
             catch (Exception ex)
             {
-                log.Debug("Error during serializing the watch rule data to config file.", ex);
+                log.Debug("Error during serializing the notification endpoint data to config file.", ex);
             }
             finally
             {
