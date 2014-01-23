@@ -140,7 +140,7 @@ namespace RemResLib.Execution
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="clientID">The client identifier.</param>
-        public Guid AddMessageForExecution(RemResMessage message, Guid clientID)
+        public void AddMessageForExecution(RemResMessage message, Guid clientID)
         {
             Guid messageId = Guid.NewGuid();
 
@@ -150,8 +150,6 @@ namespace RemResLib.Execution
                 Message = message,
                 ClientID = clientID 
             });
-
-            return messageId;
         }
 
         #endregion
@@ -210,7 +208,39 @@ namespace RemResLib.Execution
 
                 if (method != null)
                 {
-                    result = method.Invoke(watchSystemObj, new object[] { message.Message });
+                    try
+                    {
+                        result = method.Invoke(watchSystemObj, new object[] { message.Message });
+                    }
+                    catch (ArgumentException aex)
+                    {
+                        var response = new OperationStatus()
+                        {
+                            Command = message.GetType().Name,
+                            Message = string.Format("Error because a invalid input during execution of the {0} message. " + 
+                                                    "Details: {1}", message.GetType().Name, aex.Message),
+                            Status = StatusType.INVALIDINPUT
+                        };
+
+                        ResponseMessageHandler(response, message.ClientID);
+
+                        result = null;
+                    }
+                    catch (Exception ex)
+                    {
+                        var response = new OperationStatus()
+                        {
+                            Command = message.GetType().Name,
+                            Message = string.Format("Error during the execution of the {0} message. " +
+                                                    "Details: {1}", message.GetType().Name, ex.Message),
+                            Status = StatusType.ERROR
+                        };
+
+                        ResponseMessageHandler(response, message.ClientID);
+
+                        result = null;
+                    }
+
                 }
                 else
                 {

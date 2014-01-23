@@ -20,6 +20,15 @@ namespace RemResLib.Watch.Contract
         void EndWatchTask();
 
         /// <summary>
+        /// Gets the watch data.
+        /// </summary>
+        /// <value>
+        /// The watch data.
+        /// </value>
+        /// <returns></returns>
+        IList<WatchValue> WatchData { get; }
+
+        /// <summary>
         /// Occurs when the watch thread raises a notification.
         /// </summary>
         event NotificationMessage WatchNotificationOccured;

@@ -14,6 +14,12 @@ namespace RemResLib.Watch.Contract
     /// <param name="notification">The notification.</param>
     public  delegate void NotificationMessage(Notification notification);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="endpoint">The endpoint.</param>
+    public delegate void NotificationEndpointMessage(string endpoint, int port);
+
     public interface IWatchSystem
     {
         /// <summary>
@@ -28,5 +34,10 @@ namespace RemResLib.Watch.Contract
         /// Occurs when [notification occured].
         /// </summary>
         event NotificationMessage NotificationOccured;
+
+        /// <summary>
+        /// Occurs when a new notification endpoint is received.
+        /// </summary>
+        event NotificationEndpointMessage NotificationEndpointReceived;
     }
 }

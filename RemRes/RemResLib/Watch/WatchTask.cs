@@ -151,6 +151,18 @@ namespace RemResLib.Watch
             get { return activWatchRule; }
         }
 
+        /// <summary>
+        /// Gets the watch data.
+        /// </summary>
+        /// <returns></returns>
+        public IList<WatchValue> WatchData
+        {
+            get
+            {
+                return lstMeasuredValues;
+            }
+        }
+
         #endregion
 
         #region Start Stop
@@ -187,7 +199,7 @@ namespace RemResLib.Watch
             {
                 try
                 {
-                    currentValue = ReadValue(activWatchRule.WatchField).ToString(), 
+                    currentValue = ReadValue(activWatchRule.WatchField).ToString();
                     //Watch Field read value
                     tempValue = new WatchValue
                     { 
@@ -293,11 +305,12 @@ namespace RemResLib.Watch
 
                         if (isNotify)
                         {
-                            //TODO Notification Message
                             notifObj = new Notification
                                         {
                                             LastValue = currentValue.ToString(),
-                                            Message = "",
+                                            Message = String.Format("The watched field {0}.{1} reached the defined maximum {2} at {3}",
+                                                                    activWatchRule.WatchField.WatchProperty,
+                                                                    activWatchRule.WatchField.WatchObject, compareValue, DateTime.Now),
                                             Type = "MaxReached",
                                             WatchField = activWatchRule.WatchField,
                                             WatchRuleName = activWatchRule.Name
@@ -346,11 +359,12 @@ namespace RemResLib.Watch
 
                         if (isNotify)
                         {
-                            //TODO Notification Message
                             notifObj = new Notification
                             {
                                 LastValue = currentValue.ToString(),
-                                Message = "",
+                                Message = String.Format("The watched field {0}.{1} reached the defined minimum {2} at {3}",
+                                                                    activWatchRule.WatchField.WatchProperty,
+                                                                    activWatchRule.WatchField.WatchObject, compareValue, DateTime.Now),
                                 Type = "MinReached",
                                 WatchField = activWatchRule.WatchField,
                                 WatchRuleName = activWatchRule.Name
@@ -406,11 +420,12 @@ namespace RemResLib.Watch
 
                     if (isNotify)
                     {
-                        //TODO Notification Message
                         notifObj = new Notification
                         {
                             LastValue = currentValue.ToString(),
-                            Message = "",
+                            Message = String.Format("The watched field {0}.{1} reached the defined value {2} at {3}",
+                                                                    activWatchRule.WatchField.WatchProperty,
+                                                                    activWatchRule.WatchField.WatchObject, compareValue, DateTime.Now),
                             Type = "ValueReached",
                             WatchField = activWatchRule.WatchField,
                             WatchRuleName = activWatchRule.Name
@@ -727,6 +742,8 @@ namespace RemResLib.Watch
         }
 
         #endregion
+
+        
 
     }
 }

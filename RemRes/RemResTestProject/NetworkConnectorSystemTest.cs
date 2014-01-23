@@ -71,7 +71,7 @@ namespace RemResTestProject
             //Assert
             //Send message Back
             Assert.IsTrue(eventFired);
-            Assert.IsTrue(system.SendMessage(new OperationStatus(), clientGuid));
+            //Assert.IsTrue(system.SendMessage(new OperationStatus(), clientGuid));
 
             system.Stop();
         }
