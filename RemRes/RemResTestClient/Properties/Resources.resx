@@ -46,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -68,9 +69,10 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -85,9 +87,10 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -109,9 +112,74 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddWatchRule" xml:space="preserve">
+    <value>&lt;AddWatchRule&gt;
+	&lt;WatchRule Name=”#Name of Rule#” Notify=”#true/false#” 
+	     Period=”#Ueberwachungsperiode#” CacheValues=”#AnzahlValues#” &gt;
+		&lt;WatchField Type=” #Types# ”&gt;
+			&lt;WatchObject&gt; #WMI Object# &lt;/WatchObject&gt;
+			&lt;WatchProperty&gt; #WMI Object Property# &lt;/WatchProperty&gt;
+			&lt;WhereClause&gt; #WMI Where Clause# &lt;/WhereClause&gt;
+		&lt;/WatchField&gt;
+		&lt;WatchParameter&gt;
+			&lt;Min&gt;
+				{WatchField | SingleValue} 
+                    &lt;!-- Bsp Single Value --&gt;
+                    &lt;SingleValue Type="#Types#"&gt;
+                    	&lt;Value&gt;&lt;/Value&gt;
+                    &lt;/SingleValue&gt;
+			&lt;/Min&gt;
+			&lt;Max&gt;
+				{WatchField | SingleValue}
+			&lt;/Max&gt;
+			&lt;Value&gt;
+				{WatchField | SingleValue}
+			&lt;/Value&gt;
+		&lt;/WatchParameter&gt;
+	&lt;/WatchRule&gt;
+&lt;/AddWatchRule&gt;</value>
+  </data>
+  <data name="ClearWatchRules" xml:space="preserve">
+    <value>&lt;ClearWatchRules/&gt;</value>
+  </data>
+  <data name="DeleteWatchRule" xml:space="preserve">
+    <value>&lt;DeleteWatchRule Name="#Name of Rule#" /&gt;</value>
+  </data>
+  <data name="GetProcessList" xml:space="preserve">
+    <value>&lt;GetProcessList [RAMOver="#RAM Usage in Bytes#"] /&gt;</value>
+  </data>
+  <data name="GetSetting" xml:space="preserve">
+    <value>&lt;GetSetting Key="#Key of Setting#" /&gt;</value>
+  </data>
+  <data name="GetWatchData" xml:space="preserve">
+    <value>&lt;GetWatchData/&gt;
+&lt;!-- oder --&gt;
+&lt;GetWatchData Name="#Name of Rule#" /&gt;
+&lt;!-- oder --&gt;
+&lt;GetWatchData&gt;
+    &lt;WatchField Type=” #Types# ”&gt;
+          &lt;WatchObject&gt; #WMI Object# &lt;/WatchObject&gt;
+          &lt;WatchProperty&gt; #WMI Object Property# &lt;/WatchProperty&gt;
+    &lt;/WatchField&gt;
+&lt;/GetWatchData&gt;</value>
+  </data>
+  <data name="GetWatchRules" xml:space="preserve">
+    <value>&lt;GetWatchRules/&gt;</value>
+  </data>
+  <data name="KeepAliveRequest" xml:space="preserve">
+    <value>&lt;KeepAliveRequest/&gt;</value>
+  </data>
+  <data name="NotifyMe" xml:space="preserve">
+    <value>&lt;NotifyMe&gt;
+    &lt;Endpoint&gt;#Endpoint of this instance#&lt;/Endpoint&gt;
+&lt;/NotifyMe&gt;</value>
+  </data>
+  <data name="SetSetting" xml:space="preserve">
+    <value>&lt;SetSetting Key="#Key of Setting#" Value="#Value of Setting#" /&gt;</value>
+  </data>
 </root>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Mutzl.Mvvm.DependentRelayCommand</id>
+    <version>0.9.1.1</version>
+    <title>MVVM Light DependentRelayCommand (PCL)</title>
+    <authors>Thomas Mutzl</authors>
+    <owners>Thomas Mutzl</owners>
+    <licenseUrl>http://mvvmlight.codeplex.com/license</licenseUrl>
+    <iconUrl>https://mutzl.blob.core.windows.net/assets/mvvmlight.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Extends the RelayCommand of the MVVM Light Toolkit. Fires the CanExecuteChanged event for the command automatically if a PropertyChanged event of a dependent property was fired.</description>
+    <releaseNotes />
+    <copyright>Copyright 2014 Thomas Mutzl</copyright>
+    <language />
+    <tags>mvvm mvvmlight command relaycommand galasoft mutzl</tags>
+    <dependencies>
+      <dependency id="Portable.MvvmLightLibs" version="4.2.30.1" />
+    </dependencies>
+  </metadata>
+</package>

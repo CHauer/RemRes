@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RemResDataLib.Messages;
 using RemResLib.DataService.Contracts;
+using RemResLib.Network.Contracts;
 using RemResLib.Settings;
 
 namespace RemResLib.Network

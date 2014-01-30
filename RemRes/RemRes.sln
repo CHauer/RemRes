@@ -27,9 +27,11 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "RemResServiceInstaller", "R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemResTestClient", "RemResTestClient\RemResTestClient.csproj", "{B2F87821-301D-4A7D-A05A-83E4FA1E7089}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemResClientLib", "RemResClientLib\RemResClientLib.csproj", "{B192D1B7-38AC-43AC-A51A-D591BF4D1A24}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
+		SccNumberOfProjects = 9
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://hauersoftwarenet.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
@@ -61,6 +63,10 @@ Global
 		SccProjectTopLevelParentUniqueName7 = RemRes.sln
 		SccProjectName7 = RemResTestClient
 		SccLocalPath7 = RemResTestClient
+		SccProjectUniqueName8 = RemResClientLib\\RemResClientLib.csproj
+		SccProjectTopLevelParentUniqueName8 = RemRes.sln
+		SccProjectName8 = RemResClientLib
+		SccLocalPath8 = RemResClientLib
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +147,16 @@ Global
 		{B2F87821-301D-4A7D-A05A-83E4FA1E7089}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B2F87821-301D-4A7D-A05A-83E4FA1E7089}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B2F87821-301D-4A7D-A05A-83E4FA1E7089}.Release|x86.ActiveCfg = Release|Any CPU
+		{B192D1B7-38AC-43AC-A51A-D591BF4D1A24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B192D1B7-38AC-43AC-A51A-D591BF4D1A24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B192D1B7-38AC-43AC-A51A-D591BF4D1A24}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B192D1B7-38AC-43AC-A51A-D591BF4D1A24}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B192D1B7-38AC-43AC-A51A-D591BF4D1A24}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B192D1B7-38AC-43AC-A51A-D591BF4D1A24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B192D1B7-38AC-43AC-A51A-D591BF4D1A24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B192D1B7-38AC-43AC-A51A-D591BF4D1A24}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B192D1B7-38AC-43AC-A51A-D591BF4D1A24}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B192D1B7-38AC-43AC-A51A-D591BF4D1A24}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -150,6 +166,7 @@ Global
 		{E0671158-2EB8-4572-AC37-2B9A5340F77F} = {FC05191A-AB3A-4532-AC11-789168D67A88}
 		{757FDE02-DED1-43CD-956B-DCC6770F0EF3} = {691FF434-B659-45FC-8851-42FB3912D24B}
 		{B2F87821-301D-4A7D-A05A-83E4FA1E7089} = {691FF434-B659-45FC-8851-42FB3912D24B}
+		{B192D1B7-38AC-43AC-A51A-D591BF4D1A24} = {691FF434-B659-45FC-8851-42FB3912D24B}
 		{BC7E38B5-55C1-442D-B0FC-C510922BEC98} = {F495F3C5-F12A-4D9C-B5C7-F0657D6EBEF2}
 		{B622A709-AF86-4F1A-8EEB-2B9F5C3A3218} = {D372C566-E138-416F-A331-B2BD1FD61E6E}
 		{3EA0B54E-D73A-4D5F-9698-E10E464E9567} = {60198D90-27D6-4E63-98B3-FA831C37A54B}

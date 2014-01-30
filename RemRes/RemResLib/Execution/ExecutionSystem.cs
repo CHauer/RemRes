@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using RemResDataLib.Messages;
 using RemResLib.Network;
 using RemResLib.Watch;
-using RemResLib.Watch.Contract;
+using RemResLib.Watch.Contracts;
 
 namespace RemResLib.Execution
 {
@@ -197,7 +197,7 @@ namespace RemResLib.Execution
             while (executionSystemRunning)
             {
                 //if the messagequeue is empty or the watchSystem "link" is not configured
-                while (messageQueue.Peek() == null || watchSystemObj == null) 
+                while (messageQueue.Count == 0 || watchSystemObj == null) 
                 {
                     Thread.Sleep(new TimeSpan(0, 0, 0, 0, 100));
                 }
@@ -245,6 +245,12 @@ namespace RemResLib.Execution
                 else
                 {
                     _log.InfoFormat("The System can not find a handler for the message {0}.", message.Message.GetType());
+                    ResponseMessageHandler(new OperationStatus()
+                    {
+                        Command = message.Message.GetType().Name,
+                        Message = String.Format("The System can not find a handler for the message {0}.", message.Message.GetType()),
+                        Status = StatusType.INVALIDINPUT
+                    }, message.ClientID);
                 }
 
                 if (result != null && result is RemResMessage)
@@ -270,8 +276,8 @@ namespace RemResLib.Execution
             // ReSharper disable once CheckForReferenceEqualityInstead.1
             // check each public method and extract (with reflection) the custom attributes
             // and check for message type 
-            var methodCandidates = watchSystemObj.GetType().GetMethods(BindingFlags.Public)
-                .Where(m => m.GetCustomAttributes<RemResMessageHandler>().Any(a => a.MessageType.Equals(messageTyp)))
+            var methodCandidates = watchSystemObj.GetType().GetMethods()
+                .Where(m => m.GetCustomAttributes<RemResMessageHandler>().Any(a => a.MessageType == messageTyp))
                 .OrderBy(m => m.Name).ToList();
 
             // check if methods with attributes are available 

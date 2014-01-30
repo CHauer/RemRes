@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using RemResDataLib.Messages;
 using RemResLib.DataService.Contracts;
 
-namespace RemResLib.Watch.Contract
+namespace RemResLib.Watch.Contracts
 {
     /// <summary>
     /// 

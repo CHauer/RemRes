@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -9,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using RemResDataLib.Messages;
+using RemResLib.Network.Contracts;
 
 namespace RemResLib.Network.XML
 {
@@ -208,9 +210,12 @@ namespace RemResLib.Network.XML
         {
             Socket client = null;
             NetworkStream networkStream;
+            MemoryStream memoryStream;
+            StreamReader reader;
             RemResMessage inputMessage = null;
             Guid clientKey = Guid.NewGuid();
-            XmlSerializer xmlFormatter = new XmlSerializer(typeof(RemResMessage));
+            XmlSerializer xmlFormatter;
+            byte[] buffer;
 
             try
             {
@@ -240,17 +245,39 @@ namespace RemResLib.Network.XML
                         log.Debug("Problem with data connection establishment to the client.", exi);
                     }
                     networkStream = null;
+                    memoryStream = null;
                 }
 
-                while (client.Connected)
+                while (client.Connected && networkStream != null)
                 {
+
                     try
                     {
-                        inputMessage = (RemResMessage)xmlFormatter.Deserialize(networkStream);
+                        //read data in buffer
+                        buffer = new byte[client.Available];
+                        networkStream.Read(buffer, 0, client.Available);
+                        memoryStream = new MemoryStream(buffer);
+
+                        reader = new StreamReader(memoryStream);
+                        var message = reader.ReadToEnd();
+                        xmlFormatter = GetXmlSerializer(message);
+
+                        memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(message));
+
+                        if (xmlFormatter != null)
+                        {
+                            inputMessage = (RemResMessage)xmlFormatter.Deserialize(memoryStream);
+                        }
+                        else
+                        {
+                            log.Debug("Problem with receiving the xml data message from the client. Unknown message format!");
+                        }
                     }
                     catch (Exception ex)
                     {
                         log.Debug("Problem with receiving the xml data message from the client.", ex);
+                        client.Close();
+                        return;
                     }
 
                     if (inputMessage != null)
@@ -260,6 +287,12 @@ namespace RemResLib.Network.XML
                             messageReceivedHandler(inputMessage, clientKey);
                         }
                     }
+
+                    //while no data on network stream available and connection not closed
+                    while (client.Available == 0 && client.Connected)
+                    {
+                        Thread.Sleep(new TimeSpan(0, 0, 0, 0, 100));
+                    }
                 }
             }
 
@@ -268,6 +301,29 @@ namespace RemResLib.Network.XML
                 currentClients.Remove(clientKey);
             }
 
+        }
+
+        /// <summary>
+        /// Gets the XML serializer.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
+        private XmlSerializer GetXmlSerializer(string message)
+        {
+            Type baseType = typeof(RemResMessage);
+            Assembly messageAssembly = Assembly.GetAssembly(baseType);
+
+            foreach(Type t in messageAssembly.GetTypes())
+            {
+                if (t.BaseType != null && t.BaseType == baseType)
+                {
+                    if(message.Contains(t.Name))
+                    {
+                        return new XmlSerializer(t);
+                    }
+                }
+            }
+            return null;
         }
 
         #endregion
