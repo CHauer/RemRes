@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RemResClientLib.Network.Connector.RemResServiceConnector">
+    <Position X="0.75" Y="0.75" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>BQAgAAAAAAAAEgAAgCAACAAABAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Network\Connector\RemResServiceConnector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResClientLib.Network.Notification.NotificationEndpoint">
+    <Position X="0.75" Y="4.25" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAEAgAACAAAAAAAgIAAAAgAAIAAAAAIAIA=</HashCode>
+      <FileName>Network\Notification\NotificationEndpoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RemResClientLib.Network.Connector.XML.XmlServiceConnector" BaseTypeListCollapsed="true">
+    <Position X="6" Y="0.75" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IQAAACAAAAAAQAAAgGAACAAACAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Network\Connector\XML\XmlServiceConnector.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RemResClientLib.Network.Notification.XML.XmlNotificationNetworkConnector" BaseTypeListCollapsed="true">
+    <Position X="6" Y="4.25" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAEAQAACAAAACAAAAACBBAGAAAAABAIAAAEAgACAA=</HashCode>
+      <FileName>Network\Notification\XML\XmlNotificationNetworkConnector.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="RemResClientLib.Network.Connector.Contracts.IServiceConnector">
+    <Position X="3.25" Y="0.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAACAAAAAAAAAAAGAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Network\Connector\Contracts\IServiceConnector.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="RemResClientLib.Network.Notification.Contracts.INotificationNetworkConnector">
+    <Position X="3.25" Y="4.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAGAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Network\Notification\Contracts\INotificationNetworkConnector.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Delegate Name="RemResClientLib.Network.Connector.NetworkMessage">
+    <Position X="3.25" Y="3" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Network\Connector\NetworkMessage.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="RemResClientLib.Network.Notification.NotificationMessage">
+    <Position X="3.25" Y="6.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Network\Notification\NotificationMessage.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

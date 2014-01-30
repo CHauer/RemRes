@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using RemResDataLib.BaseTypes;
 using RemResDataLib.Messages;
-using RemResLib.Watch.Contract;
+using RemResLib.Watch.Contracts;
 
 
 namespace RemResLib.Watch

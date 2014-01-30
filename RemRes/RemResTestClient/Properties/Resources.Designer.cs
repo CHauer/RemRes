@@ -3,68 +3,174 @@
 //     Dieser Code wurde von einem Tool generiert.
 //     Laufzeitversion:4.0.30319.34003
 //
-//     Änderungen an dieser Datei können fehlerhaftes Verhalten verursachen und gehen verloren, wenn
-//     der Code neu generiert wird.
+//     Änderungen an dieser Datei können falsches Verhalten verursachen und gehen verloren, wenn
+//     der Code erneut generiert wird.
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RemResTestClient.Properties
-{
-
-
+namespace RemResTestClient.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
     /// </summary>
-    // Diese Klasse wurde von der StronglyTypedResourceBuilder-Klasse
-    // über ein Tool wie ResGen oder Visual Studio automatisch generiert.
+    // Diese Klasse wurde von der StronglyTypedResourceBuilder automatisch generiert
+    // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
-    // mit der Option /str erneut aus, oder erstellen Sie Ihr VS-Projekt neu.
+    // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources
-    {
-
+    internal class Resources {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources()
-        {
+        internal Resources() {
         }
-
+        
         /// <summary>
         ///   Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if ((resourceMan == null))
-                {
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RemResTestClient.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Überschreibt die CurrentUICulture-Eigenschaft des aktuellen Threads für alle
-        ///   Ressourcenlookups, die diese stark typisierte Ressourcenklasse verwenden.
+        ///   Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;AddWatchRule&gt;
+        ///	&lt;WatchRule Name=”#Name of Rule#” Notify=”#true/false#” 
+        ///	     Period=”#Ueberwachungsperiode#” CacheValues=”#AnzahlValues#” &gt;
+        ///		&lt;WatchField Type=” #Types# ”&gt;
+        ///			&lt;WatchObject&gt; #WMI Object# &lt;/WatchObject&gt;
+        ///			&lt;WatchProperty&gt; #WMI Object Property# &lt;/WatchProperty&gt;
+        ///			&lt;WhereClause&gt; #WMI Where Clause# &lt;/WhereClause&gt;
+        ///		&lt;/WatchField&gt;
+        ///		&lt;WatchParameter&gt;
+        ///			&lt;Min&gt;
+        ///				{WatchField | SingleValue} 
+        ///                    &lt;!-- Bsp Single Value --&gt;
+        ///                    &lt;SingleValue Type=&quot;#Types#&quot;&gt;
+        ///  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string AddWatchRule {
+            get {
+                return ResourceManager.GetString("AddWatchRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;ClearWatchRules/&gt; ähnelt.
+        /// </summary>
+        internal static string ClearWatchRules {
+            get {
+                return ResourceManager.GetString("ClearWatchRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;DeleteWatchRule Name=&quot;#Name of Rule#&quot; /&gt; ähnelt.
+        /// </summary>
+        internal static string DeleteWatchRule {
+            get {
+                return ResourceManager.GetString("DeleteWatchRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;GetProcessList [RAMOver=&quot;#RAM Usage in Bytes#&quot;] /&gt; ähnelt.
+        /// </summary>
+        internal static string GetProcessList {
+            get {
+                return ResourceManager.GetString("GetProcessList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;GetSetting Key=&quot;#Key of Setting#&quot; /&gt; ähnelt.
+        /// </summary>
+        internal static string GetSetting {
+            get {
+                return ResourceManager.GetString("GetSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;GetWatchData/&gt;
+        ///&lt;!-- oder --&gt;
+        ///&lt;GetWatchData Name=&quot;#Name of Rule#&quot; /&gt;
+        ///&lt;!-- oder --&gt;
+        ///&lt;GetWatchData&gt;
+        ///    &lt;WatchField Type=” #Types# ”&gt;
+        ///          &lt;WatchObject&gt; #WMI Object# &lt;/WatchObject&gt;
+        ///          &lt;WatchProperty&gt; #WMI Object Property# &lt;/WatchProperty&gt;
+        ///    &lt;/WatchField&gt;
+        ///&lt;/GetWatchData&gt; ähnelt.
+        /// </summary>
+        internal static string GetWatchData {
+            get {
+                return ResourceManager.GetString("GetWatchData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;GetWatchRules/&gt; ähnelt.
+        /// </summary>
+        internal static string GetWatchRules {
+            get {
+                return ResourceManager.GetString("GetWatchRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;KeepAliveRequest/&gt; ähnelt.
+        /// </summary>
+        internal static string KeepAliveRequest {
+            get {
+                return ResourceManager.GetString("KeepAliveRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;NotifyMe&gt;
+        ///    &lt;Endpoint&gt;#Endpoint of this instance#&lt;/Endpoint&gt;
+        ///&lt;/NotifyMe&gt; ähnelt.
+        /// </summary>
+        internal static string NotifyMe {
+            get {
+                return ResourceManager.GetString("NotifyMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;SetSetting Key=&quot;#Key of Setting#&quot; Value=&quot;#Value of Setting#&quot; /&gt; ähnelt.
+        /// </summary>
+        internal static string SetSetting {
+            get {
+                return ResourceManager.GetString("SetSetting", resourceCulture);
             }
         }
     }

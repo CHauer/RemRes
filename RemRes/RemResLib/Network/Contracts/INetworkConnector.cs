@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RemResDataLib.Messages;
 
-namespace RemResLib.Network
+namespace RemResLib.Network.Contracts
 {
     /// <summary>
     /// The INetwornConnector INterfaces describes which functions a Network Connector 

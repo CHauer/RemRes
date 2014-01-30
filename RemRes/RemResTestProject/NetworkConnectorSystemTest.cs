@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RemResDataLib.Messages;
 using RemResLib.Network;
+using RemResLib.Network.Contracts.Fakes;
 using RemResLib.Network.Fakes;
 
 namespace RemResTestProject

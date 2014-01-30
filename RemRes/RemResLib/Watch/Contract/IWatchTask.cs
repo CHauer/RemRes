@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RemResDataLib.BaseTypes;
 
-namespace RemResLib.Watch.Contract
+namespace RemResLib.Watch.Contracts
 {
     interface IWatchTask
     {

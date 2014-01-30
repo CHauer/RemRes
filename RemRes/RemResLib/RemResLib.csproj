@@ -55,7 +55,7 @@
     <Compile Include="DataService\XmlNotificationDataService.cs" />
     <Compile Include="DataService\AppConfigSettingsDataService.cs" />
     <Compile Include="Execution\ExecutionSystem.cs" />
-    <Compile Include="Network\INetworkConnector.cs" />
+    <Compile Include="Network\Contracts\INetworkConnector.cs" />
     <Compile Include="Network\NetworkConnectSystem.cs" />
     <Compile Include="Network\NotificationEndpoint.cs" />
     <Compile Include="Network\XML\ServiceXmlListener.cs" />

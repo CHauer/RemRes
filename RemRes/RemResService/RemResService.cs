@@ -172,7 +172,7 @@ namespace RemResService
         {
             try
             {
-                return Convert.ToInt32(settingsManager.GetSettingValue("standardServiceListenPort"));
+                return Convert.ToInt32(settingsManager.GetSettingValue("standardServiceListenPort").Value);
             }
             catch(Exception ex)
             {

@@ -1,23 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="RemResLib.DataService.ConfigDataService">
-    <Position X="9.75" Y="1.75" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>DataService\ConfigDataService.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="RemResLib.DataService.NotificationDataService">
-    <Position X="2.75" Y="6.25" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>DataService\NotificationDataService.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="RemResLib.DataService.AppConfigSettingsDataService">
-    <Position X="9.75" Y="6.25" Width="2" />
+    <Position X="12" Y="5.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAgCAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataService\AppConfigSettingsDataService.cs</FileName>
@@ -25,7 +9,10 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="RemResLib.Execution.ExecutionSystem">
-    <Position X="5.25" Y="0.5" Width="1.75" />
+    <Position X="5" Y="0.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <NestedTypes>
       <Class Name="RemResLib.Execution.ExecutionSystem.ExecutionMessage" Collapsed="true">
         <TypeIdentifier>
@@ -34,19 +21,22 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAgAQAACACEAACAAAECIAABIAEAAAAICACAAAAAAA=</HashCode>
+      <HashCode>AAAAgAQAACACEEACAAAECIAADAAEAAACIAACAAAAAAA=</HashCode>
       <FileName>Execution\ExecutionSystem.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="RemResLib.Network.NetworkConnectSystem">
-    <Position X="2.75" Y="0.5" Width="2" />
+    <Position X="2.5" Y="0.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <AssociationLine Name="NotificationDataService" Type="RemResLib.DataService.Contracts.INotificationDataService">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-0.921" Y="0.133" />
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.921" Y="0.133" Height="0.182" Width="1.649" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AIAAAAAIYCAAAAAACCAAAAAAhAAAASAAIAAAAAAAAIA=</HashCode>
+      <HashCode>AIAAAAAIYCAAAkAACaBAAAAApAAAASAAIAAAAACAAIA=</HashCode>
       <FileName>Network\NetworkConnectSystem.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -59,16 +49,16 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAEAQAQCAAAACAACAACCBAAAAAACBAIAAAMAgACAA=</HashCode>
+      <HashCode>AAAAEAQAQCAAAACAACBACCBAAAAAACBAIAAAMAgACAA=</HashCode>
       <FileName>Network\XML\ServiceXmlListener.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="RemResLib.Settings.SettingsManager">
-    <Position X="7.5" Y="4.5" Width="1.75" />
+    <Position X="9.5" Y="5" Width="1.75" />
     <AssociationLine Name="SettingsDataService" Type="RemResLib.DataService.Contracts.ISettingsDataService">
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
-        <Position X="-1.609" Y="0.685" Height="0.182" Width="1.662" />
+        <Position X="0.516" Y="-0.69" Height="0.182" Width="1.662" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
@@ -80,17 +70,17 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="RemResLib.Watch.WatchSystem">
-    <Position X="7.5" Y="0.5" Width="1.75" />
+    <Position X="7.25" Y="0.5" Width="1.75" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <AssociationLine Name="ConfigDataService" Type="RemResLib.DataService.Contracts.IConfigDataService">
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
-        <Position X="-1.598" Y="0.477" Height="0.182" Width="1.558" />
+        <Position X="-0.088" Y="0.196" Height="0.182" Width="1.558" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>UAAABAAAAEAEAABEgAAAAAAABAAEAAAAAEAQEAALAAA=</HashCode>
+      <HashCode>UAACBAQAAEAAgELMhAgAAAAAJBAlAACAgEAUAAALIRA=</HashCode>
       <FileName>Watch\WatchSystem.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -98,36 +88,68 @@
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="RemResLib.DataService.Contracts.IConfigDataService">
-    <Position X="9.75" Y="0.5" Width="2" />
+  <Class Name="RemResLib.DataService.XmlConfigDataService">
+    <Position X="9.5" Y="2.25" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAEAAAAAAIgAAgAAACAAAIAAAAAIAAAAgAAAAAEA=</HashCode>
+      <FileName>DataService\XmlConfigDataService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RemResLib.DataService.XmlNotificationDataService">
+    <Position X="4.75" Y="5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAgQAACBAAIAAAAAIEAAAgAAAAAAA=</HashCode>
+      <FileName>DataService\XmlNotificationDataService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RemResLib.Watch.RemResMessageHandler">
+    <Position X="12" Y="1" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Watch\RemResMessageHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="RemResLib.DataService.Contracts.IConfigDataService">
+    <Position X="9.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>DataService\Contracts\IConfigDataService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="RemResLib.DataService.Contracts.INotificationDataService">
-    <Position X="2.75" Y="5" Width="2" />
+    <Position X="2.5" Y="5.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataService\Contracts\INotificationDataService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="RemResLib.DataService.Contracts.ISettingsDataService">
-    <Position X="9.75" Y="4.5" Width="2" />
+    <Position X="12" Y="3.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataService\Contracts\ISettingsDataService.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="RemResLib.Network.INetworkConnector">
-    <Position X="0.5" Y="5.5" Width="1.75" />
+  <Interface Name="RemResLib.Network.Contracts.INetworkConnector">
+    <Position X="0.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAQCAAAAAAACAAACAAAAAAAAAAIAAAAAAAAAA=</HashCode>
-      <FileName>Network\INetworkConnector.cs</FileName>
+      <HashCode>AAAAAAAAQCAAAAAAACBAACAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Network\Contracts\INetworkConnector.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Delegate Name="RemResLib.Network.NetworkMessage">
-    <Position X="0.5" Y="4.25" Width="1.75" />
+    <Position X="0.5" Y="4.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Network\NetworkConnectSystem.cs</FileName>

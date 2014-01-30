@@ -114,6 +114,11 @@ namespace RemResLib.Settings
             try
             {
                 loadValue = settingsDataServiceObj.LoadSettingValue(key);
+
+                if (String.IsNullOrEmpty(loadValue))
+                {
+                    throw new ArgumentOutOfRangeException(key);
+                }
             }
             catch (ArgumentOutOfRangeException aex)
             {

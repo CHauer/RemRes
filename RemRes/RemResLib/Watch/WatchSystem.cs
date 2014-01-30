@@ -9,7 +9,7 @@ using RemResDataLib.BaseTypes;
 using RemResDataLib.Messages;
 using RemResLib.DataService.Contracts;
 using RemResLib.Settings;
-using RemResLib.Watch.Contract;
+using RemResLib.Watch.Contracts;
 
 namespace RemResLib.Watch
 {
@@ -554,13 +554,23 @@ namespace RemResLib.Watch
             }
 
             var key = ((GetSetting)message).Key;
-
-            return new GetSettingResult
+            try
             {
-                Settings = new RemResDataLib.BaseTypes.Settings(){
+                return new GetSettingResult
+                {
+                    Settings = new RemResDataLib.BaseTypes.Settings(){
                     settingsManagerObj.GetSettingValue(key)
                 }
-            };
+                };
+            }
+            catch (Exception ex)
+            {
+                return new OperationStatus(){
+                    Command = message.GetType().Name,
+                    Message = ex.Message,
+                    Status = StatusType.ERROR
+                };
+            }
         }
 
         /// <summary>
