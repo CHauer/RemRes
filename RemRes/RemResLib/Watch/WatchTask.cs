@@ -172,7 +172,9 @@ namespace RemResLib.Watch
         /// </summary>
         public void StartWatchTask()
         {
-            runTask = true; 
+            runTask = true;
+
+            watchTaskThread.Start();
         }
         
         /// <summary>
@@ -664,7 +666,16 @@ namespace RemResLib.Watch
             //check if only one instance is in collection
             if (resultCollection.Count == 1)
             {
-                var obj = (resultCollection.GetEnumerator().Current as ManagementObject);
+                //exception with this way of getting the first  entry
+                //var obj = (resultCollection.GetEnumerator().Current as ManagementObject);
+
+                ManagementObject obj = null;
+
+                //other solution
+                foreach (ManagementObject entry in resultCollection)
+                {
+                    obj = entry;
+                }
 
                 return ExtractValue(obj, activWatchRule.WatchField.WatchProperty);
             }

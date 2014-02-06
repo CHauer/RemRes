@@ -11,11 +11,16 @@ namespace RemResDataLib.BaseTypes
     {
         public string ProcessName { get; set; }
 
+        public string ProcessTitle { get; set; }
+
+        public bool Responding { get; set; }
+
         public int RAM { get; set;}
 
         public int PID { get; set; }
 
-        public string User { get; set; }
+        //Removed because not used
+        //public string User { get; set; }
 
     }
 }

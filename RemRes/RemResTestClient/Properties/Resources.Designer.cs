@@ -62,9 +62,9 @@ namespace RemResTestClient.Properties {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die &lt;AddWatchRule&gt;
-        ///	&lt;WatchRule Name=”#Name of Rule#” Notify=”#true/false#” 
-        ///	     Period=”#Ueberwachungsperiode#” CacheValues=”#AnzahlValues#” &gt;
-        ///		&lt;WatchField Type=” #Types# ”&gt;
+        ///	&lt;WatchRule Name=&quot;#Name of Rule#&quot; Notify=&quot;#true/false#&quot; 
+        ///	     Period=&quot;#Ueberwachungsperiode#&quot; CacheValues=&quot;#AnzahlValues#&quot; &gt;
+        ///		&lt;WatchField Type=&quot; #Types# &quot;&gt;
         ///			&lt;WatchObject&gt; #WMI Object# &lt;/WatchObject&gt;
         ///			&lt;WatchProperty&gt; #WMI Object Property# &lt;/WatchProperty&gt;
         ///			&lt;WhereClause&gt; #WMI Where Clause# &lt;/WhereClause&gt;
@@ -124,7 +124,7 @@ namespace RemResTestClient.Properties {
         ///&lt;GetWatchData Name=&quot;#Name of Rule#&quot; /&gt;
         ///&lt;!-- oder --&gt;
         ///&lt;GetWatchData&gt;
-        ///    &lt;WatchField Type=” #Types# ”&gt;
+        ///    &lt;WatchField Type=&quot; #Types# &quot;&gt;
         ///          &lt;WatchObject&gt; #WMI Object# &lt;/WatchObject&gt;
         ///          &lt;WatchProperty&gt; #WMI Object Property# &lt;/WatchProperty&gt;
         ///    &lt;/WatchField&gt;

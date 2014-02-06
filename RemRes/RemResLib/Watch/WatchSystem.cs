@@ -478,9 +478,13 @@ namespace RemResLib.Watch
                 throw new InvalidOperationException("The message type for this messagehandler method is invalid.");
             }
 
+            //no possible in one line because of problem with convert from list<watchrule> to WatchRuleSet
+            var ruleset = new WatchRuleSet();
+            ruleset.AddRange(lstAktivWatchTasks.Select(t => t.Rule).ToList());
+
             return new GetWatchRuleResult()
             {
-                WatchRuleSet = (lstAktivWatchTasks.Select(t => t.Rule).ToList() as WatchRuleSet)
+                WatchRuleSet = ruleset
             };
         }
 
@@ -518,18 +522,27 @@ namespace RemResLib.Watch
             }
             else
             {
-                lstProcess = System.Diagnostics.Process.GetProcesses().Where(p => p.WorkingSet64 > minRamBytes).ToList();
+                lstProcess = System.Diagnostics.Process.GetProcesses().Where(p => p.WorkingSet64 >= minRamBytes).ToList();
             }
 
             foreach (var proc in lstProcess)
             {
-                resultList.Add(new Process
+                try
                 {
-                    PID = proc.Id,
-                    ProcessName = proc.ProcessName,
-                    RAM = (int)(proc.WorkingSet64/1024),
-                    User = proc.StartInfo.UserName
-                });
+                    resultList.Add(new Process
+                    {
+                        PID = proc.Id,
+                        ProcessName = proc.ProcessName,
+                        ProcessTitle = proc.MainWindowTitle,
+                        Responding = proc.Responding,
+                        RAM = (int)(proc.WorkingSet64)
+                    });
+                }
+                catch (Exception ex)
+                {
+                    _log.Debug("Error during accesing the proccess list - " + 
+                                ex.Message);
+                }
             }
 
             return new GetProcessListResult() { ProcessSet = resultList };
@@ -803,7 +816,20 @@ namespace RemResLib.Watch
         {
             lock (lockSaveWatchTask)
             {
-                configDataServiceObj.SaveWatchRules(lstAktivWatchTasks.Select(t => t.Rule).ToList() as WatchRuleSet);
+                var rules = lstAktivWatchTasks.Select(t => t.Rule).ToList();
+                var ruleset = new WatchRuleSet();
+
+                foreach (var rule in rules)
+                {
+                    //dont save the collected values - only temporay watching
+                    rule.WatchField.WatchFieldValues = null;
+                    ruleset.Add(rule);
+                }
+
+                configDataServiceObj.SaveWatchRules(ruleset);
+
+                //no use of direct cast due  problem with the convert from List<WatchRule> to WatchRuleSet
+                //configDataServiceObj.SaveWatchRules(lstAktivWatchTasks.Select(t => t.Rule).ToList() as WatchRuleSet);
             }
         }
 

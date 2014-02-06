@@ -217,6 +217,14 @@ namespace RemResLib.Network.XML
             XmlSerializer xmlFormatter;
             byte[] buffer;
 
+            OperationStatus osInvalidInput = new OperationStatus()
+                                                {
+                                                    Command = "Unknown",
+                                                    Message = "Invalid Input Data - The input " +
+                                                                "is not a valid RemRes Message or Command.",
+                                                    Status = StatusType.INVALIDINPUT
+                                                };
+
             try
             {
                 client = tcpListener.EndAcceptSocket(result);
@@ -271,13 +279,23 @@ namespace RemResLib.Network.XML
                         else
                         {
                             log.Debug("Problem with receiving the xml data message from the client. Unknown message format!");
+
+                            //Send back an error operation status
+                            SendMessage(osInvalidInput, clientKey);
+
+                            //end connection
+                            client.Disconnect(false);
                         }
                     }
                     catch (Exception ex)
                     {
                         log.Debug("Problem with receiving the xml data message from the client.", ex);
-                        client.Close();
-                        return;
+
+                        //Send back an error operation status
+                        SendMessage(osInvalidInput, clientKey);
+
+                        //end connection
+                        client.Disconnect(false);
                     }
 
                     if (inputMessage != null)
@@ -294,6 +312,15 @@ namespace RemResLib.Network.XML
                         Thread.Sleep(new TimeSpan(0, 0, 0, 0, 100));
                     }
                 }
+
+                if (networkStream != null)
+                {
+                    networkStream.Close();
+                    networkStream.Dispose();
+                }
+
+                client.Close();
+                client.Dispose(); 
             }
 
             if (currentClients.ContainsKey(clientKey))
@@ -373,6 +400,18 @@ namespace RemResLib.Network.XML
             catch (Exception ex)
             {
                 log.Debug("Problem with sending the xml data message from the client.", ex);
+            }
+            finally
+            {
+                //Clean up 
+                networkStream.Close();
+                networkStream.Dispose();
+
+                //end connection to client - response was send - clean up in incomming data handler
+                if (currentClients.ContainsKey(clientID))
+                {
+                    currentClients[clientID].Disconnect(false);
+                }
             }
 
             return true;

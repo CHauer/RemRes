@@ -50,12 +50,5 @@ namespace RemResClientLib.Network.Connector.Contracts
         /// <returns></returns>
         string SendMessage(string message);
 
-        /// <summary>
-        /// Sends the message.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <returns></returns>
-        Task<RemResMessage> SendMessageAsync(RemResMessage message);
-
     }
 }
