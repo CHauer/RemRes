@@ -148,7 +148,7 @@ namespace RemResLib.DataService
 
             try
             {
-                fileStream = File.OpenWrite(notificationFileName);
+                fileStream = File.Open(notificationFileName, FileMode.Create, FileAccess.Write);
             }
             catch (Exception ex)
             {

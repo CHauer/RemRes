@@ -4,11 +4,11 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
         xmlns:command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         xmlns:viewModel="clr-namespace:RemResTestClient.ViewModel"
-        Title="RemRes Test Client" Height="500" Width="625">
+        Title="RemRes Test Client" Height="700" Width="900">
     <Window.Resources>
         <viewModel:MainViewModel x:Key="mainViewModel" />
     </Window.Resources>
-    <Grid DataContext="{StaticResource mainViewModel}">
+    <Grid DataContext="{StaticResource mainViewModel}" x:Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -65,8 +65,14 @@
                 <!--<Button Margin="10" Command="{Binding MessageSend}" >Validate Message</Button>-->
                 <Button Margin="10" Command="{Binding MessageSend}" >Send Message</Button>
             </StackPanel>
-            
-            <TextBlock Grid.Column="1" TextWrapping="Wrap" TextTrimming="WordEllipsis" 
+            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                <TextBlock>Notification Endpoint:</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="[IP/localhost]:" FontWeight="Bold"></TextBlock>
+                    <TextBlock Text="{Binding NotificationPort}" FontWeight="Bold" ></TextBlock>
+                </StackPanel>
+            </StackPanel>
+            <TextBlock Grid.Column="2" TextWrapping="Wrap" TextTrimming="WordEllipsis" 
                        Foreground="PaleVioletRed" Text="{Binding ErrorMessage}" />
         </Grid>
     </Grid>

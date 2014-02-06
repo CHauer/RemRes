@@ -229,7 +229,7 @@ namespace RemResLib.Watch
                 }
 
                 //Check for notification
-                if (activWatchRule.Notifiy)
+                if (activWatchRule.Notify)
                 {
                     //only if a value is available
                     if (tempValue != null)
@@ -482,154 +482,81 @@ namespace RemResLib.Watch
             {
                 case WatchFieldType.DateTime:
 
-                    if (currentValue.GetType() == compareValue.GetType())
+                    try
                     {
-                        try
+                        var d1 = Convert.ToDateTime(currentValue);
+                        var d2 = Convert.ToDateTime(compareValue);
+
+                        if (operation == CompareOperation.More)
                         {
-                            if (operation == CompareOperation.More)
-                            {
-                                return (DateTime)currentValue >= (DateTime)compareValue;
-                            }
-                            else if (operation == CompareOperation.Less)
-                            {
-                                return (DateTime)currentValue <= (DateTime)compareValue;
-                            }
-                            else
-                            {
-                                return ((DateTime)currentValue).Equals((DateTime)compareValue);
-                            }
+                            return d1 >= d2;
                         }
-                        catch (Exception ex)
+                        else if (operation == CompareOperation.Less)
                         {
-                            log.Debug("Error during Datetime compare.", ex);
+                            return d1 <= d2;
+                        }
+                        else
+                        {
+                            return d1.Equals(d2);
                         }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        try
-                        {
-                            var d1 = Convert.ToDateTime(currentValue);
-                            var d2 = Convert.ToDateTime(compareValue);
-
-                            if (operation == CompareOperation.More)
-                            {
-                                return d1 >= d2;
-                            }
-                            else if (operation == CompareOperation.Less)
-                            {
-                                return d1 <= d2;
-                            }
-                            else
-                            {
-                                return d1.Equals(d2);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            log.Debug("Error during Datetime compare.", ex);
-                        }
+                        log.Debug("Error during Datetime compare.", ex);
                     }
 
                     break;
                 case WatchFieldType.Double:
 
-                    if (currentValue.GetType() == compareValue.GetType())
+                    try
                     {
-                        try
-                        {
-                            if (operation == CompareOperation.More)
-                            {
-                                return (Double)currentValue >= (Double)compareValue;
-                            }
-                            else if (operation == CompareOperation.Less)
-                            {
-                                return (Double)currentValue <= (Double)compareValue;
-                            }
-                            else
-                            {
-                                return ((Double)currentValue).Equals((Double)compareValue);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            log.Debug("Error during Double compare.", ex);
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            var d1 = Convert.ToDouble(currentValue);
-                            var d2 = Convert.ToDouble(compareValue);
+                        var d1 = Convert.ToDouble(currentValue);
+                        var d2 = Convert.ToDouble(compareValue);
 
-                            if (operation == CompareOperation.More)
-                            {
-                                return d1 >= d2;
-                            }
-                            else if (operation == CompareOperation.Less)
-                            {
-                                return d1 <= d2;
-                            }
-                            else
-                            {
-                                return d1.Equals(d2);
-                            }
-                        }
-                        catch (Exception ex)
+                        if (operation == CompareOperation.More)
                         {
-                            log.Debug("Error during Double compare.", ex);
+                            return d1 >= d2;
+                        }
+                        else if (operation == CompareOperation.Less)
+                        {
+                            return d1 <= d2;
+                        }
+                        else
+                        {
+                            return d1.Equals(d2);
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        log.Debug("Error during Double compare.", ex);
+                    }
+                    
                     break;
                 case WatchFieldType.Integer:
 
-                    if (currentValue.GetType() == compareValue.GetType())
+                    try
                     {
-                        try
-                        {
-                            if (operation == CompareOperation.More)
-                            {
-                                return (int)currentValue >= (int)compareValue;
-                            }
-                            else if (operation == CompareOperation.Less)
-                            {
-                                return (int)currentValue <= (int)compareValue;
-                            }
-                            else
-                            {
-                                return ((Double)currentValue).Equals((Double)compareValue);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            log.Debug("Error during Integer compare.", ex);
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            var i1 = Convert.ToInt32(currentValue);
-                            var i2 = Convert.ToInt32(compareValue);
+                        var i1 = Convert.ToInt32(currentValue);
+                        var i2 = Convert.ToInt32(compareValue);
 
-                            if (operation == CompareOperation.More)
-                            {
-                                return i1 >= i2;
-                            }
-                            else if (operation == CompareOperation.Less)
-                            {
-                                return i1 <= i2;
-                            }
-                            else
-                            {
-                                return i1.Equals(i2);
-                            }
-                        }
-                        catch (Exception ex)
+                        if (operation == CompareOperation.More)
                         {
-                            log.Debug("Error during Integer compare.", ex);
+                            return i1 >= i2;
+                        }
+                        else if (operation == CompareOperation.Less)
+                        {
+                            return i1 <= i2;
+                        }
+                        else
+                        {
+                            return i1.Equals(i2);
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        log.Debug("Error during Integer compare.", ex);
+                    }
+                    
                     break;
                 case WatchFieldType.Boolean:
                     return currentValue.Equals(compareValue);

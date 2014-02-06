@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.ServiceProcess;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using log4net.Core;
-using RemResDataLib.Messages;
-using RemResDataLib.BaseTypes;
 using RemResLib.DataService;
 using RemResLib.Execution;
 using RemResLib.Network;
@@ -156,11 +145,16 @@ namespace RemResService
         {
             int servicePort = -1;
 
+            //load instance of networkConnect system
             networkSystem = NetworkConnectSystem.GetInstance();
             
             //Get port from SettingsManager
             servicePort = LoadServicePort();
 
+            //initialize the dataservice to save the notification enpoints
+            networkSystem.NotificationDataService = new XmlNotificationDataService();
+
+            //add network XML Connector or Listener
             networkSystem.AddNetworkConnector(new ServiceXmlListener(servicePort));
         }
 
@@ -196,7 +190,10 @@ namespace RemResService
         /// </summary>
         private void InitWatchSystem()
         {
+            //load instance of watchsystem
             watchSystem = WatchSystem.GetInstance();
+
+            //initialize the configdataservice to save the config in xml format
             watchSystem.ConfigDataService = new XmlConfigDataService();
         }
 
@@ -231,8 +228,11 @@ namespace RemResService
         /// </summary>
         private void StartSystems()
         {
+            //first because to initialize the save config rules
             watchSystem.StartWatchSystem();
+            //second to be prepared for incoming messages 
             executionSystem.Start();
+            //third service ready for incoming messages
             networkSystem.Start();
         }
 
@@ -241,8 +241,11 @@ namespace RemResService
         /// </summary>
         private void StopSystems()
         {
+            //first - do not handle incoming messages any longer
             networkSystem.Stop();
+            //second - handle all current messages and stop
             executionSystem.Stop();
+            //third - save config and stop
             watchSystem.EndWatchSystem();
         }
 
@@ -258,6 +261,8 @@ namespace RemResService
         /// </summary>
         public void DebugStart()
         {
+            Console.WriteLine("[Press ENTER for END]");
+
             OnStart(null);
 
             Console.ReadLine();

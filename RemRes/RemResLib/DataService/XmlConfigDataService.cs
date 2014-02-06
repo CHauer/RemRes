@@ -153,7 +153,7 @@ namespace RemResLib.DataService
 
             try
             {
-                fileStream = File.OpenWrite(configFileName);
+                fileStream = File.Open(configFileName, FileMode.Create, FileAccess.Write);
             }
             catch (Exception ex)
             {

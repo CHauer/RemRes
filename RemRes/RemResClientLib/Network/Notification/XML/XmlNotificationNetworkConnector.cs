@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -13,7 +14,7 @@ using RemResDataLib.Messages;
 
 namespace RemResClientLib.Network.Notification.XML
 {
-    class XmlNotificationNetworkConnector : INotificationNetworkConnector
+    public class XmlNotificationNetworkConnector : INotificationNetworkConnector
     {
         /// <summary>
         /// The run service
@@ -50,7 +51,6 @@ namespace RemResClientLib.Network.Notification.XML
         /// <summary>
         /// Initializes a new instance of the <see cref="XmlNotificationNetworkConnector"/> class.
         /// </summary>
-        /// <param name="port">The port.</param>
         /// <exception cref="System.ArgumentException">Port number has to be between 0 and 65535.;port</exception>
         public XmlNotificationNetworkConnector()
         {
@@ -224,8 +224,10 @@ namespace RemResClientLib.Network.Notification.XML
         {
             Socket client = null;
             NetworkStream networkStream;
+            MemoryStream memoryStream;
             RemResMessage inputMessage = null;
-            XmlSerializer xmlFormatter = new XmlSerializer(typeof(RemResMessage));
+            XmlSerializer xmlFormatter = new XmlSerializer(typeof(RemResDataLib.Messages.Notification));
+            byte[] buffer;
 
             try
             {
@@ -253,17 +255,24 @@ namespace RemResClientLib.Network.Notification.XML
                         log.Debug("Problem with data connection establishment to the client.", exi);
                     }
                     networkStream = null;
+                    memoryStream = null;
                 }
 
-                while (client.Connected && networkStream != null)
+                if (client.Connected && networkStream != null)
                 {
                     try
                     {
-                        inputMessage = (RemResMessage)xmlFormatter.Deserialize(networkStream);
+                        //direct deserializing from networkstream ends in endless loop
+                        //because networkStream does not support seek/readtoend 
+                        buffer = new byte[client.Available];
+                        networkStream.Read(buffer, 0, client.Available);
+                        memoryStream = new MemoryStream(buffer);
+
+                        inputMessage = (RemResMessage)xmlFormatter.Deserialize(memoryStream);
                     }
                     catch (Exception ex)
                     {
-                        log.Debug("Problem with receiving the xml data message from the client.", ex);
+                        log.Debug("Problem with receiving the notification xml data message from the client.", ex);
                     }
 
                     if (inputMessage != null)
@@ -273,6 +282,13 @@ namespace RemResClientLib.Network.Notification.XML
                             NotificationReceivedHandler(inputMessage);
                         }
                     }
+                }
+
+                //clean up 
+                if (networkStream != null)
+                {
+                    networkStream.Close();
+                    networkStream.Dispose();
                 }
 
                 client.Close();

@@ -261,6 +261,9 @@ namespace RemResLib.Network.XML
 
                     try
                     {
+                        //direct deserializing from networkstream ends in endless loop
+                        //because networkStream does not support seek/readtoend 
+
                         //read data in buffer
                         buffer = new byte[client.Available];
                         networkStream.Read(buffer, 0, client.Available);
@@ -268,6 +271,8 @@ namespace RemResLib.Network.XML
 
                         reader = new StreamReader(memoryStream);
                         var message = reader.ReadToEnd();
+
+                        //get the right formatter for the incomming message
                         xmlFormatter = GetXmlSerializer(message);
 
                         memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(message));

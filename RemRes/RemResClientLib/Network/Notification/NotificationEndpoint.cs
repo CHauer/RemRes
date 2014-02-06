@@ -9,9 +9,9 @@ namespace RemResClientLib.Network.Notification
     public class NotificationEndpoint
     {
         /// <summary>
-        /// Occurs when [notification occured handler].
+        /// Occurs when a notification message is received.
         /// </summary>
-        private event NotificationMessage notificationOccuredHandler;
+        private event NotificationMessage NotificationOccuredHandler;
 
         /// <summary>
         /// The connectors
@@ -31,10 +31,17 @@ namespace RemResClientLib.Network.Notification
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NotificationEndpoint"/> class.
+        /// Initializes a new instance of the <see cref="NotificationEndpoint" /> class.
         /// </summary>
+        /// <param name="port">The port.</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">port</exception>
         public NotificationEndpoint(int port)
         {
+            if (port <= 0 || port > 65535)
+            {
+                throw new ArgumentOutOfRangeException("port");
+            }
+
             this.port = port;
             InitializeObjects();
         }
@@ -56,15 +63,18 @@ namespace RemResClientLib.Network.Notification
 
         #region Events
 
+        /// <summary>
+        /// Occurs when a notification message is received
+        /// </summary>
         public event NotificationMessage NotificationOccured
         {
             add
             {
-                notificationOccuredHandler += value;
+                NotificationOccuredHandler += value;
             }
             remove
             {
-                notificationOccuredHandler -= value;
+                NotificationOccuredHandler -= value;
             }
         }
 
@@ -72,6 +82,9 @@ namespace RemResClientLib.Network.Notification
 
         #region Start Stop 
 
+        /// <summary>
+        /// Starts the notification endpoint.
+        /// </summary>
         public void StartNotificationEndpoint()
         {
             if (networkSystemRun)
@@ -81,16 +94,19 @@ namespace RemResClientLib.Network.Notification
 
             foreach (INotificationNetworkConnector connector in connectors)
             {
-                connector.NotificationReceived += notificationOccuredHandler;
+                connector.NotificationReceived += NotificationOccuredHandler;
                 connector.Start();
             }
         }
 
+        /// <summary>
+        /// Stops the notification endpoint.
+        /// </summary>
         public void StopNotificationEndpoint()
         {
             foreach (INotificationNetworkConnector connector in connectors)
             {
-                connector.NotificationReceived -= notificationOccuredHandler;
+                connector.NotificationReceived -= NotificationOccuredHandler;
                 connector.Stop();
             }
 
@@ -103,16 +119,23 @@ namespace RemResClientLib.Network.Notification
 
         /// <summary>
         /// Adds the network connector.
+        /// If the notificationEndpoint is running - the conector ist started.
         /// </summary>
         /// <param name="connector">The connector.</param>
         public void AddNetworkConnector(INotificationNetworkConnector connector)
         {
             connector.Port = port;
             connectors.Add(connector);
+
+            if (networkSystemRun)
+            {
+                connector.Start();
+            }
         }
 
         /// <summary>
         /// Adds the network connector.
+        /// If the notificationEndpoint is running - the conector ist started.
         /// </summary>
         /// <param name="rangeConnectors">The range of connectors.</param>
         public void AddNetworkConnector(IEnumerable<INotificationNetworkConnector> rangeConnectors)
@@ -120,6 +143,11 @@ namespace RemResClientLib.Network.Notification
             foreach (var con in rangeConnectors)
             {
                 con.Port = port;
+
+                if (networkSystemRun)
+                {
+                    con.Start();
+                }
             }
 
             this.connectors.AddRange(rangeConnectors);
