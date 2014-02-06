@@ -708,7 +708,7 @@ namespace RemResLib.Watch
             {
                 return errorStatus;
             }
-
+            
             //raise event enpoint recieved
             NotificationEndpointReceivedHandler(hostname, port);
 

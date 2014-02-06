@@ -410,6 +410,10 @@ namespace RemResTestClient.ViewModel
             ResponseMessage = await serviceConnector.SendMessageAsync(serviceID, UserMessageInput);
         }
 
+        /// <summary>
+        /// Converts to rem resource message.
+        /// </summary>
+        /// <returns></returns>
         [Obsolete]
         private RemResMessage ConvertToRemResMessage()
         {
@@ -436,6 +440,10 @@ namespace RemResTestClient.ViewModel
             return null;
         }
 
+        /// <summary>
+        /// Determines whether this instance [can send message].
+        /// </summary>
+        /// <returns></returns>
         private bool CanSendMessage()
         {
             if (String.IsNullOrEmpty(clientAddress) || string.IsNullOrEmpty(userMessageInput))

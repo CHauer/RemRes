@@ -72,7 +72,7 @@
                     <TextBlock Text="{Binding NotificationPort}" FontWeight="Bold" ></TextBlock>
                 </StackPanel>
             </StackPanel>
-            <TextBlock Grid.Column="2" TextWrapping="Wrap" TextTrimming="WordEllipsis" 
+            <TextBlock Grid.Column="2" TextWrapping="Wrap" TextTrimming="WordEllipsis" VerticalAlignment="Center"
                        Foreground="PaleVioletRed" Text="{Binding ErrorMessage}" />
         </Grid>
     </Grid>

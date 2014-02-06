@@ -34,5 +34,13 @@ namespace RemResLib.Network
         /// The port.
         /// </value>
         public int Port { get; set; }
+
+        /// <summary>
+        /// Gets or sets the failed send operations.
+        /// </summary>
+        /// <value>
+        /// The failed send operations.
+        /// </value>
+        public int FailedSendOperations { get; set; }
     }
 }

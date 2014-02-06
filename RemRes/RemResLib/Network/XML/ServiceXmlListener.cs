@@ -463,6 +463,19 @@ namespace RemResLib.Network.XML
             catch (Exception ex)
             {
                 log.Debug("Problem with sending the xml data message from the client.", ex);
+                return false;
+            }
+            finally
+            {
+                //clean up
+
+                if (networkStream != null)
+                {
+                    networkStream.Close();
+                    networkStream.Dispose();
+                }
+
+                client.Close();
             }
 
             return true;
