@@ -48,7 +48,7 @@ namespace RemResLib.Network
         /// <summary>
         /// Occurs when [network message occured handler].
         /// </summary>
-        private event NetworkMessage messageReceivedHandler;
+        private event NetworkMessage MessageReceivedHandler;
 
         /// <summary>
         /// The list of notification endpoints
@@ -146,15 +146,35 @@ namespace RemResLib.Network
         public void AddNetworkConnector(INetworkConnector connector)
         {
             connectors.Add(connector);
+
+            if (networkSystemRun)
+            {
+                connector.Start();
+            }
         }
 
         /// <summary>
         /// Adds the network connector.
         /// </summary>
-        /// <param name="connectors">The connectors.</param>
-        public void AddNetworkConnector(IEnumerable<INetworkConnector> connectors)
+        /// <param name="addConnectors">The connectors.</param>
+        public void AddNetworkConnector(IEnumerable<INetworkConnector> addConnectors)
         {
-            this.connectors.AddRange(connectors);
+            if (addConnectors == null)
+            {
+                return;
+            }
+
+            // ReSharper disable once PossibleMultipleEnumeration
+            connectors.AddRange(addConnectors);
+
+            if (networkSystemRun)
+            {
+                // ReSharper disable once PossibleMultipleEnumeration
+                foreach (var con in addConnectors)
+                {
+                    con.Start();
+                }
+            }
         }
 
         /// <summary>
@@ -180,11 +200,11 @@ namespace RemResLib.Network
         {
             add
             {
-                messageReceivedHandler += value;
+                MessageReceivedHandler += value;
             }
             remove
             {
-                messageReceivedHandler -= value;
+                MessageReceivedHandler -= value;
             }
         }
 
@@ -204,7 +224,7 @@ namespace RemResLib.Network
 
             foreach (INetworkConnector connector in connectors)
             {
-                connector.MessageReceived += messageReceivedHandler;
+                connector.MessageReceived += MessageReceivedHandler;
                 connector.Start();
             }
 
@@ -217,7 +237,7 @@ namespace RemResLib.Network
         {
             foreach (INetworkConnector connector in connectors)
             {
-                connector.MessageReceived -= messageReceivedHandler;
+                connector.MessageReceived -= MessageReceivedHandler;
                 connector.Stop();
             }
 
@@ -284,7 +304,7 @@ namespace RemResLib.Network
 
                 try
                 {
-                    keepDays = Convert.ToInt32(settingsManagerObj.GetSettingValue("notificationDuration"));
+                    keepDays = Convert.ToInt32(settingsManagerObj.GetSettingValue("notificationDuration").Value);
                 }
                 catch { ;}
 

@@ -14,7 +14,7 @@ namespace RemResDataLib.BaseTypes
         public string Name { get; set; }
 
         [XmlAttribute]
-        public bool Notifiy { get; set; }
+        public bool Notify { get; set; }
 
         [XmlAttribute]
         public int Period { get; set; }

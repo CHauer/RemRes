@@ -210,15 +210,44 @@ namespace RemResLib.Execution
                 {
                     try
                     {
+                        //does not pass through the execptions thrown within the invoked method (only targetinvocationexeption)
                         result = method.Invoke(watchSystemObj, new object[] { message.Message });
                     }
-                    catch (ArgumentException aex)
+                    catch (TargetException tiex)
                     {
+                        Exception iex = tiex;
+
+                        if (tiex.InnerException != null)
+                        {
+                            iex = tiex.InnerException;
+                        }
+
                         var response = new OperationStatus()
                         {
-                            Command = message.GetType().Name,
-                            Message = string.Format("Error because a invalid input during execution of the {0} message. " + 
-                                                    "Details: {1}", message.GetType().Name, aex.Message),
+                            Command = message.Message.GetType().Name,
+                            Message = string.Format("Error because a invalid input during execution of the {0} message. " +
+                                                    "Details: {1}", message.Message.GetType().Name, iex.Message),
+                            Status = StatusType.INVALIDINPUT
+                        };
+
+                        ResponseMessageHandler(response, message.ClientID);
+
+                        result = null;
+                    }
+                    catch (TargetInvocationException tiex)
+                    {
+                        Exception iex  = tiex;
+
+                        if (tiex.InnerException != null)
+                        {
+                            iex = tiex.InnerException;
+                        }
+
+                        var response = new OperationStatus()
+                        {
+                            Command = message.Message.GetType().Name,
+                            Message = string.Format("Error because a invalid input during execution of the {0} message. " +
+                                                    "Details: {1}", message.Message.GetType().Name, iex.Message),
                             Status = StatusType.INVALIDINPUT
                         };
 
@@ -230,9 +259,9 @@ namespace RemResLib.Execution
                     {
                         var response = new OperationStatus()
                         {
-                            Command = message.GetType().Name,
+                            Command = message.Message.GetType().Name,
                             Message = string.Format("Error during the execution of the {0} message. " +
-                                                    "Details: {1}", message.GetType().Name, ex.Message),
+                                                    "Details: {1}", message.Message.GetType().Name, ex.Message),
                             Status = StatusType.ERROR
                         };
 

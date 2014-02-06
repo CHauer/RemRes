@@ -265,7 +265,7 @@ namespace RemResLib.Watch
             //NOTE no check if watchobject and watchproperty returns value or causes error at wmi
             //NOTE no check if given type is ok
 
-            if (convertedMessage.WatchRule.Notifiy)
+            if (convertedMessage.WatchRule.Notify)
             {
                 if (convertedMessage.WatchRule.WatchParameter == null)
                 {
@@ -692,7 +692,7 @@ namespace RemResLib.Watch
 
             string[] endpointParts = endpoint.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (endpoint.Length == 2)
+            if (endpointParts.Length == 2)
             {
                 hostname = endpointParts[0];
                 try

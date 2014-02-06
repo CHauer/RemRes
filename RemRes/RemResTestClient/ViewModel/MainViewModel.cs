@@ -12,10 +12,15 @@ using System.Windows.Input;
 using System.Xml;
 using System.Xml.Serialization;
 using GalaSoft.MvvmLight;
+using log4net;
+using log4net.Appender;
 using Mutzl.MvvmLight;
 using RemResClientLib.Network.Connector;
 using RemResClientLib.Network.Connector.XML;
+using RemResClientLib.Network.Notification;
+using RemResClientLib.Network.Notification.XML;
 using RemResDataLib.Messages;
+using RemResTestClient.Logging;
 using RemResTestClient.Properties;
 
 namespace RemResTestClient.ViewModel
@@ -61,12 +66,27 @@ namespace RemResTestClient.ViewModel
         /// <summary>
         /// The notification enpoint
         /// </summary>
-        private string notificationEnpointPort;
+        private int notificationEnpointPort;
 
         /// <summary>
         /// The service connector
         /// </summary>
         private RemResServiceConnector serviceConnector;
+
+        /// <summary>
+        /// The notification endpoint
+        /// </summary>
+        private NotificationEndpoint notificationEndpoint;
+
+        /// <summary>
+        /// The notification received handler
+        /// </summary>
+        private event NotificationMessage NotificationReceivedHandler;
+
+        /// <summary>
+        /// The log
+        /// </summary>
+        private static log4net.ILog log;
 
         /// <summary>
         /// The service identifier
@@ -80,14 +100,37 @@ namespace RemResTestClient.ViewModel
         /// </summary>
         public MainViewModel()
         {
+            InitializeLog();
             InitializeMessageTypes();
             InitializeCommands();
             InitializeServiceConnect();
+            InitializeNotification();
         }
 
         #endregion
 
         #region Initialize
+
+        /// <summary>
+        /// Initializes the log.
+        /// </summary>
+        private void InitializeLog()
+        {
+            log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+            var memoryAppender = (MemoryAppenderWithEvents)LogManager.GetRepository().GetAppenders()
+                .FirstOrDefault(a => a.Name.Equals("MemoryAppender"));
+
+           if (memoryAppender != null)
+           {
+               memoryAppender.LogEventOccured += MemoryAppender_LogEventOccured;
+           }
+        }
+
+        private void MemoryAppender_LogEventOccured(log4net.Core.LoggingEvent obj)
+        {
+            this.ErrorMessage = obj.RenderedMessage;
+        }
 
         /// <summary>
         /// Initializes the message types.
@@ -133,6 +176,26 @@ namespace RemResTestClient.ViewModel
         private void InitializeServiceConnect()
         {
             serviceConnector = RemResServiceConnector.GetInstance();
+        }
+
+        /// <summary>
+        /// Initializes the notification.
+        /// </summary>
+        private void InitializeNotification()
+        {
+            NotificationPort = 45520;
+
+            //initilize the notification nedpoint
+            notificationEndpoint = new NotificationEndpoint(NotificationPort);
+
+            //add the right connector to the endpoint to enable xml communication
+            notificationEndpoint.AddNetworkConnector(new XmlNotificationNetworkConnector());
+
+            //forward the notification event
+            notificationEndpoint.NotificationOccured += (message) => NotificationReceivedHandler(message);
+
+            //start the endpoint - listen to the port
+            notificationEndpoint.StartNotificationEndpoint();
         }
 
         #endregion
@@ -274,6 +337,25 @@ namespace RemResTestClient.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets the notification port.
+        /// </summary>
+        /// <value>
+        /// The notification port.
+        /// </value>
+        public int NotificationPort
+        {
+            get
+            {
+                return notificationEnpointPort;
+            }
+            set
+            {
+                this.notificationEnpointPort = value;
+                RaisePropertyChanged(() => NotificationPort);
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -299,7 +381,26 @@ namespace RemResTestClient.ViewModel
 
         #endregion
 
-        #region Send Message 
+        #region Events
+
+        /// <summary>
+        /// Occurs when [notification received].
+        /// </summary>
+        public event NotificationMessage NotificationReceived
+        {
+            add
+            {
+                NotificationReceivedHandler += value;
+            }
+            remove
+            {
+                NotificationReceivedHandler -= value;
+            }
+        }
+
+        #endregion
+
+        #region Send Message
 
         /// <summary>
         /// Sends the message.
@@ -309,6 +410,7 @@ namespace RemResTestClient.ViewModel
             ResponseMessage = await serviceConnector.SendMessageAsync(serviceID, UserMessageInput);
         }
 
+        [Obsolete]
         private RemResMessage ConvertToRemResMessage()
         {
             XmlSerializer xmlFormatter = new XmlSerializer(typeof(RemResMessage));
@@ -380,5 +482,12 @@ namespace RemResTestClient.ViewModel
 
         #endregion
 
+        /// <summary>
+        /// Stops the notification endpoint.
+        /// </summary>
+        public void StopNotificationEndpoint()
+        {
+            notificationEndpoint.StopNotificationEndpoint();
+        }
     }
 }
