@@ -134,6 +134,11 @@ namespace RemResLib.DataService
                 //return empty list
                 return ruleSet;
             }
+            finally
+            {
+                fileStream.Close();
+                fileStream.Dispose();
+            }
 
             return ruleSet;
         }
@@ -168,6 +173,7 @@ namespace RemResLib.DataService
             {
                 fileStream.Flush();
                 fileStream.Close();
+                fileStream.Dispose();
             }
 
         }

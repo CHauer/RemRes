@@ -177,6 +177,12 @@ namespace RemResClientLib.Network.Connector.XML
             {
                 log.Debug("Problem while receiving the the xml response data message from the service.", ex);
             }
+            finally
+            {
+                networkStream.Close();
+                networkStream.Dispose();
+                client.Close();
+            }
 
             return null;
         }
@@ -271,18 +277,15 @@ namespace RemResClientLib.Network.Connector.XML
             {
                 log.Debug("Problem while receiving the the xml response data message from the service.", ex);
             }
+            finally
+            {
+                networkStream.Close();
+                networkStream.Dispose();
+                writer.Dispose();
+                client.Close();
+            }
 
             return null;
-        }
-
-        /// <summary>
-        /// Sends the message.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <returns></returns>
-        public Task<RemResMessage> SendMessageAsync(RemResMessage message)
-        {
-            return new Task<RemResMessage>(() => SendMessage(message));
         }
 
         #endregion
