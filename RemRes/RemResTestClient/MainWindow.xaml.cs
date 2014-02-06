@@ -46,9 +46,10 @@ namespace RemResTestClient
             {
                 Notification msg = (notificationMessage as Notification);
                 MessageBox.Show(String.Format(
-                    "Notification\n"+
-                    "{0}\n{1}", msg.Message, msg.ToString() 
-                    ), "Notification received");
+                    "{0}\nValue:{1}\nWatch Field:{2}-{3}\nWatch Rule:{4}",
+                    msg.Message, msg.LastValue, msg.WatchField.WatchObject,
+                    msg.WatchField.WatchProperty, msg.WatchRuleName),
+                    "Notification received");
             }
         }
 

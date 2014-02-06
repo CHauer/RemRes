@@ -7,6 +7,7 @@ using RemResDataLib.Messages;
 using RemResLib.DataService.Contracts;
 using RemResLib.Network.Contracts;
 using RemResLib.Settings;
+using RemResLib.Watch.Contracts;
 
 namespace RemResLib.Network
 {
@@ -17,7 +18,7 @@ namespace RemResLib.Network
     /// <param name="clientID">The client identifier.</param>
     public delegate void NetworkMessage(RemResMessage message, Guid clientID);
 
-    public class NetworkConnectSystem
+    public class NetworkConnectSystem : IWatchNotificationHandler
     {
 
         /// <summary>
@@ -241,6 +242,9 @@ namespace RemResLib.Network
                 connector.Stop();
             }
 
+            //End the Notification handling - clean and save endpoints
+            EndNotificationHandling();
+
             networkSystemRun = false;
         }
 
@@ -282,6 +286,8 @@ namespace RemResLib.Network
             }
 
             lstNotificationEndpoints = notificationDataServiceObj.LoadNotificationEndpoints();
+
+            CleanUpNotificationEndpoints();
         }
 
         /// <summary>
@@ -293,28 +299,62 @@ namespace RemResLib.Network
         {
             lock (lockEndpoints)
             {
-                lstNotificationEndpoints.Add(new NotificationEndpoint
+                //is the notification endpoint exists 
+                if (lstNotificationEndpoints.Any(ne => ne.Endpoint.Equals(endpoint) && ne.Port.Equals(port)))
                 {
-                    DateReceived = DateTime.Now,
-                    Endpoint = endpoint,
-                    Port = port
-                });
+                    //update the exisiting notification endpoint
+                    var elem = lstNotificationEndpoints.First(ne => ne.Endpoint.Equals(endpoint) && ne.Port.Equals(port));
 
-                int keepDays = 5;
-
-                try
-                {
-                    keepDays = Convert.ToInt32(settingsManagerObj.GetSettingValue("notificationDuration").Value);
+                    elem.FailedSendOperations = 0;
+                    elem.DateReceived = DateTime.Now;
                 }
-                catch { ;}
-
-                //remove all items older than xx days 
-                foreach (var item in lstNotificationEndpoints.Where(e => Math.Abs((e.DateReceived - DateTime.Now).Days) > keepDays).ToList())
+                else
                 {
-                    lstNotificationEndpoints.Remove(item);
+                    //endpoint doesnt exist - add a new endpoint
+                    lstNotificationEndpoints.Add(new NotificationEndpoint
+                    {
+                        FailedSendOperations = 0,
+                        DateReceived = DateTime.Now,
+                        Endpoint = endpoint,
+                        Port = port
+                    });
                 }
 
+                //Check for clean up notification enpoints
+                CleanUpNotificationEndpoints();
+
+                //Save Notification endpoints
                 notificationDataServiceObj.SaveNotificationEndpoints(lstNotificationEndpoints);
+            }
+        }
+
+        /// <summary>
+        /// Cleans up notification endpoints.
+        /// Deletes all Notification Endpoints the are older than "keepDays" Setting
+        /// </summary>
+        private void CleanUpNotificationEndpoints()
+        {
+            int keepDays = 0;
+            int maxFailedSends = 0;
+
+            try
+            {
+                keepDays = Convert.ToInt32(settingsManagerObj.GetSettingValue("notificationDuration").Value);
+                maxFailedSends = Convert.ToInt32(settingsManagerObj.GetSettingValue("notificationMaxFailSendOperations").Value);
+            }
+            catch
+            {
+                keepDays = 5;
+                maxFailedSends = 20;
+            }
+
+            //remove all items older than xx days 
+            foreach (var item in lstNotificationEndpoints
+                        .Where(e => (Math.Abs((e.DateReceived - DateTime.Now).Days) > keepDays) ||
+                                    (e.FailedSendOperations >= maxFailedSends))
+                        .ToList())
+            {
+                lstNotificationEndpoints.Remove(item);
             }
         }
 
@@ -331,9 +371,27 @@ namespace RemResLib.Network
                 {
                     foreach (var connector in connectors)
                     {
-                        connector.SendNotification(message, endpoint.Endpoint, endpoint.Port);
+                        if (!connector.SendNotification(message, endpoint.Endpoint, endpoint.Port))
+                        {
+                            endpoint.FailedSendOperations++;
+                        }
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Ends the notification handling.
+        /// </summary>
+        private void EndNotificationHandling()
+        {
+            lock (lockEndpoints)
+            {
+                //Check for clean up notification enpoints
+                CleanUpNotificationEndpoints();
+
+                //Save Notification endpoints
+                notificationDataServiceObj.SaveNotificationEndpoints(lstNotificationEndpoints);
             }
         }
 
