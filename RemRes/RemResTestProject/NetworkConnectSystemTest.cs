@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RemResDataLib.Messages;
+using RemResLib;
 using RemResLib.Network;
 using RemResLib.Network.Contracts.Fakes;
 using RemResLib.Network.Fakes;
@@ -8,7 +9,7 @@ using RemResLib.Network.Fakes;
 namespace RemResTestProject
 {
     [TestClass]
-    public class NetworkConnectorSystemTest
+    public class NetworkConnectSystemTest
     {
         /// <summary>
         /// Tests the NetworkConnect System.
@@ -55,10 +56,7 @@ namespace RemResTestProject
             var connector = new StubINetworkConnector()
             {
                 SendMessageRemResMessageGuid = (message, clientID) => { return true; },
-                IsClientRegisteredGuid = (clientID) =>
-                {
-                    return clientGuid == clientID;
-                }
+                IsClientRegisteredGuid = (clientID) => clientGuid == clientID
             };
             system.AddNetworkConnector(connector);
             system.MessageReceived += (message, clientID) => { eventFired = true; };
@@ -76,5 +74,7 @@ namespace RemResTestProject
 
             system.Stop();
         }
+
+        
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration.Install;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,6 +15,18 @@ namespace RemResService
         public ProjectInstaller()
         {
             InitializeComponent();
+
+            #region Eventlog erzeuge
+            //Eventlog erzeugen
+            if (!EventLog.SourceExists("RemResService"))
+            {
+                try
+                {
+                    EventLog.CreateEventSource("RemResService", "RemResLog");
+                }
+                catch { ;}
+            }
+            #endregion
         }
     }
 }
