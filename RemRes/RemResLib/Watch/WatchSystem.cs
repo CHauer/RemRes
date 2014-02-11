@@ -198,7 +198,6 @@ namespace RemResLib.Watch
         public RemResMessage AddWatchRule(RemResMessage message)
         {
             AddWatchRule convertedMessage;
-            WatchTask tempTask;
 
             if (!(message is AddWatchRule))
             {
@@ -334,7 +333,6 @@ namespace RemResLib.Watch
         public RemResMessage DeleteWatchRule(RemResMessage message)
         {
             DeleteWatchRule convertedMessage;
-            WatchTask tempTask;
 
             if (!(message is DeleteWatchRule))
             {

@@ -86,6 +86,8 @@ namespace RemResService
         /// <param name="args">Vom Befehl zum Starten übergebene Daten.</param>
         protected override void OnStart(string[] args)
         {
+            base.OnStart(args);
+
             log.Info("Service RemRes is starting.");
 
             try
@@ -107,6 +109,8 @@ namespace RemResService
         /// </summary>
         protected override void OnStop()
         {
+            base.OnStop();
+
             Task.Run(new Action(StopSystems));
         }
 

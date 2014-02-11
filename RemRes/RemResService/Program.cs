@@ -15,12 +15,11 @@ namespace RemResService
         static void Main()
         {
 #if !DEBUG
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[] 
+            ServiceBase[] servicesToRun =
             { 
                 new RemResService() 
             };
-            ServiceBase.Run(ServicesToRun);
+            ServiceBase.Run(servicesToRun);
 
 #else
             new RemResService().DebugStart();

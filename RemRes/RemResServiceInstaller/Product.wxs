@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="RemRes ServiceInstaller" Language="1033" Version="1.0.0.0" Manufacturer="FHWN" UpgradeCode="e05f02c4-8d13-466c-97d9-75b61a705f0b">
+<?define ProductVersion = "1.0.0.0"?>
+<?define ProductUpgradeCode = "e05f02c4-8d13-466c-97d9-75b61a705f0b"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" >
+	<Product Id="*" Name="RemResService" Language="1033" Version="$(var.ProductVersion)" Manufacturer="FH Wiener Neustadt"
+           UpgradeCode="$(var.ProductUpgradeCode)">
 		<Package Id="*" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate EmbedCab="yes" />
 
-		<Feature Id="ProductFeature" Title="RemResServiceInstaller" Level="1">
+    <Icon Id="ProductIcon" SourceFile="..\RemResService\bin\Release\RemRes.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="ProductIcon"/>
+    <Property Id="ARPURLINFOABOUT" Value="http://www.fhwn.ac.at"/>
+    <Property Id="ARPNOREPAIR" Value="1"/>
+    <Property Id="ARPNOMODIFY" Value="1"/>
+
+    <Upgrade Id="$(var.ProductUpgradeCode)">
+      <UpgradeVersion Minimum="$(var.ProductVersion)" OnlyDetect="yes" Property="NEWERVERSIONDETECTED"/>
+      <UpgradeVersion Minimum="0.0.0" Maximum="$(var.ProductVersion)" IncludeMinimum="yes" IncludeMaximum="no"
+                      Property="OLDERVERSIONBEINGUPGRADED"/>
+    </Upgrade>
+    <Condition Message="A newer version of this software is already installed.">NOT NEWERVERSIONDETECTED</Condition>
+
+    <Feature Id="ProductFeature" Title="RemResServiceInstaller" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
 		</Feature>
+    
 	</Product>
 
 	<Fragment>
@@ -20,23 +38,59 @@
 	</Fragment>
 
 	<Fragment>
+    
+    <PropertyRef Id="NETFRAMEWORK40FULLINSTALLROOTDIR"/>
+    <PropertyRef Id="NETFRAMEWORK40CLIENTINSTALLROOTDIR"/>
+
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-      <Component Guid="{5038D809-2B73-47A0-B025-12797E13A7A4}" >
-        <File Source="$(var.RemResService.TargetPath)" KeyPath="yes" />
-        <ServiceInstall Id="ServiceInstaller"
-                        Name="RemResService" DisplayName="RemResService" Description="RemRes Service - Computer WMI watcher"
-                        ErrorControl="ignore"  Start="auto" Type="ownProcess"
-                        Account="[SERVICEACCOUNT]" />
-        <ServiceControl Id="StartService" Start="install" Stop="both" Remove="uninstall" Name="RemResService" Wait="yes" />
-      </Component>
       <Component Guid="{9A42D291-6880-48B3-88EC-8F616B18358E}" >
         <File Source="$(var.RemResLib.TargetPath)" KeyPath="yes" />
       </Component>
+      
       <Component Guid="{091C61BC-17C5-4692-91CB-C18B0007EDC1}">
         <File Source="$(var.RemResDataLib.TargetPath)" KeyPath="yes" />
       </Component>
-      <Component Guid="{362B3668-992E-49FA-B366-EC48FDEDA576}" >
-        <File Source="..\RemResService\bin\Release\RemResService.exe.config" KeyPath="yes" />
+
+      <!-- Event Source creation for 32bit OS with .NET 4 Full-->
+      <Component Id="CreateEventSource32BitFullNet4" Guid="{C87FEBB3-6F8E-4979-9299-07EA27B64B64}">
+        <Condition><![CDATA[NETFRAMEWORK40FULLINSTALLROOTDIR AND NOT VersionNT64]]></Condition>
+        <CreateFolder/>
+        <!-- Create an Event Source -->
+        <Util:EventSource
+              xmlns:Util="http://schemas.microsoft.com/wix/UtilExtension"
+              Name="RemResService"
+              Log="Application"
+              EventMessageFile="[NETFRAMEWORK40FULLINSTALLROOTDIR]EventLogMessages.dll"/>
+      </Component>
+
+      <!-- Event Source creation for 32bit OS with .NET 4 Client Profile-->
+      <Component Id="CreateEventSource32BitClientNet4" Guid="{111C2F17-AF9A-4CD0-A5DD-B67465722A96}">
+        <Condition><![CDATA[NETFRAMEWORK40CLIENTINSTALLROOTDIR AND NOT VersionNT64]]></Condition>
+          <CreateFolder/>
+          <!-- Create an Event Source -->
+          <Util:EventSource
+            xmlns:Util="http://schemas.microsoft.com/wix/UtilExtension"
+            Name="RemResService"
+            Log="Application"
+            EventMessageFile="[NETFRAMEWORK40CLIENTINSTALLROOTDIR]EventLogMessages.dll"/>
+        </Component>
+
+      <Component Guid="{5038D809-2B73-47A0-B025-12797E13A7A4}" >
+        <File Source="..\RemResService\bin\Release\RemResService.exe.config" KeyPath="no" />
+        <File Source="..\RemResService\bin\Release\log4net.dll" KeyPath="no" />
+        <File Source="$(var.RemResService.TargetPath)" KeyPath="yes" />
+
+        <ServiceInstall Id="ServiceInstaller"
+                        Name="RemResService"
+                        DisplayName="RemResService"
+                        Description="RemRes Service - Computer WMI watcher"
+                        ErrorControl="ignore"
+                        Start="auto"
+                        Vital="yes"
+                        Type="ownProcess"
+                        Account="LocalSystem"
+                        Interactive="no" />
+        <ServiceControl Id="StartService"  Stop="both" Remove="uninstall" Name="RemResService" Wait="yes" />
       </Component>
 		</ComponentGroup>
 	</Fragment>
