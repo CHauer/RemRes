@@ -390,8 +390,11 @@ namespace RemResLib.Network
                 //Check for clean up notification enpoints
                 CleanUpNotificationEndpoints();
 
-                //Save Notification endpoints
-                notificationDataServiceObj.SaveNotificationEndpoints(lstNotificationEndpoints);
+                if (notificationDataServiceObj != null)
+                {
+                    //Save Notification endpoints
+                    notificationDataServiceObj.SaveNotificationEndpoints(lstNotificationEndpoints);
+                }
             }
         }
 
