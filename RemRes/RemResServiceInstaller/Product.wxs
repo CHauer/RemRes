@@ -45,6 +45,8 @@
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <Component Guid="{9A42D291-6880-48B3-88EC-8F616B18358E}" >
         <File Source="$(var.RemResLib.TargetPath)" KeyPath="yes" />
+        <File Source="..\RemResService\bin\Release\RemResService.exe.config" KeyPath="no" />
+        <File Source="..\RemResService\bin\Release\log4net.dll" KeyPath="no" />
       </Component>
       
       <Component Guid="{091C61BC-17C5-4692-91CB-C18B0007EDC1}">
@@ -76,8 +78,6 @@
         </Component>
 
       <Component Guid="{5038D809-2B73-47A0-B025-12797E13A7A4}" >
-        <File Source="..\RemResService\bin\Release\RemResService.exe.config" KeyPath="no" />
-        <File Source="..\RemResService\bin\Release\log4net.dll" KeyPath="no" />
         <File Source="$(var.RemResService.TargetPath)" KeyPath="yes" />
 
         <ServiceInstall Id="ServiceInstaller"
