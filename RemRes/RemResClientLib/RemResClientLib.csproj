@@ -32,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\RemResClientLib.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
