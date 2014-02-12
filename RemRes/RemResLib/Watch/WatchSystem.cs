@@ -447,11 +447,17 @@ namespace RemResLib.Watch
                                                              t.Rule.WatchField.WatchProperty.Equals(convertedMessage.WatchField.WatchProperty)).ToList();
             }
 
+            // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (var task in tempTaskList)
             {
-                WatchField tempField = task.Rule.WatchField;
-
-                tempField.WatchFieldValues = task.WatchData.ToList();
+                WatchField tempField = new WatchField
+                {
+                    Type = task.Rule.WatchField.Type,
+                    WatchObject = task.Rule.WatchField.WatchObject,
+                    WatchProperty = task.Rule.WatchField.WatchProperty,
+                    WhereClause = task.Rule.WatchField.WhereClause,
+                    WatchFieldValues = task.WatchData.ToList()
+                };
 
                 resultSet.Add(tempField);
             }
